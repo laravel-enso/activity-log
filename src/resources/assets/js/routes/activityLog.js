@@ -1,4 +1,4 @@
-const ActivityLogIndex = () => import('../../../pages/core/activityLog/Index.vue');
+const ActivityLogIndex = () => import('../pages/activityLog/Index.vue');
 
 export default {
     name: 'core.activityLog.index',
