@@ -84,7 +84,7 @@ class Feed implements Responsable
                         'time' => $item->created_at->format('H:i A'),
                         'author' => [
                             'name' => $item->createdBy->fullName,
-                            'avatarId' => $item->createdBy->avatarId
+                            'avatarId' => $item->createdBy->avatarId,
                         ],
                         'morphable' => $this->morphable($item),
                     ];
@@ -127,7 +127,7 @@ class Feed implements Responsable
         return $item->meta->morphable
             ? [
                     'model' => $this->model($item->meta->morphable->model_class),
-                    'label' => $item->meta->morphable->label
+                    'label' => $item->meta->morphable->label,
             ]
             : null;
     }

@@ -10,7 +10,7 @@ class ActivityLog extends Model
     use CreatedBy;
 
     protected $fillable = [
-        'model_class', 'model_id', 'model_identifier', 'event', 'meta'
+        'model_class', 'model_id', 'model_identifier', 'event', 'meta',
     ];
 
     protected $casts = ['meta' => 'object'];

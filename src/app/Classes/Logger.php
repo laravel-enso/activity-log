@@ -60,7 +60,7 @@ class Logger
                 'message' => $message,
                 'icon' => $icon,
                 'morphable' => $this->getMorphable(),
-            ]
+            ],
         ]);
     }
 
@@ -113,7 +113,7 @@ class Logger
         $morph = $this->model->getLoggableMorph();
 
         if (!$morph) {
-            return null;
+            return;
         }
 
         $morphable = key($morph);
@@ -121,14 +121,14 @@ class Logger
         $modelClass = get_class($this->model->{$morphable});
 
         if (!isset($morph[$morphable][$modelClass])) {
-            return null;
+            return;
         }
 
         $attribute = $morph[$morphable][$modelClass];
 
         return [
             'model_class' => $modelClass,
-            'label' => $this->model->{$morphable}->{$attribute}
+            'label' => $this->model->{$morphable}->{$attribute},
         ];
     }
 
@@ -169,7 +169,7 @@ class Logger
     {
         return collect($this->model->getLoggable())
             ->map(function ($value, $key) {
-                return is_integer($key)
+                return is_int($key)
                     ? $value
                     : $key;
             });
