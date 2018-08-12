@@ -9,7 +9,6 @@ use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 class Logger
 {
     private $model;
-    private $loggable;
     private $loggableChanges;
     private $before = null;
     private $after = null;
@@ -67,7 +66,8 @@ class Logger
     private function parse()
     {
         collect($this->loggableChanges)
-            ->each(function ($value, $key) {
+            ->keys()
+            ->each(function ($key) {
                 if (!isset($this->model->getLoggable()[$key])) {
                     return;
                 }
