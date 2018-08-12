@@ -58,7 +58,8 @@ class Logger
                 'before' => $this->before,
                 'after' => $this->after,
                 'message' => $message,
-                'icon' => $icon
+                'icon' => $icon,
+                'morphable' => $this->getMorphable(),
             ]
         ]);
     }
@@ -105,6 +106,30 @@ class Logger
 
         $this->after[$key] = $this->model
             ->getLoggable()[$key]::get($this->after[$key]);
+    }
+
+    private function getMorphable()
+    {
+        $morph = $this->model->getLoggableMorph();
+
+        if (!$morph) {
+            return null;
+        }
+
+        $morphable = key($morph);
+
+        $modelClass = get_class($this->model->{$morphable});
+
+        if (!isset($morph[$morphable][$modelClass])) {
+            return null;
+        }
+
+        $attribute = $morph[$morphable][$modelClass];
+
+        return [
+            'model_class' => $modelClass,
+            'label' => $this->model->{$morphable}->{$attribute}
+        ];
     }
 
     private function updateKey($key)

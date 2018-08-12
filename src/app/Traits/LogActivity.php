@@ -7,9 +7,11 @@ use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
 trait LogActivity
 {
-    // protected $loggableLabel = 'name';
+    // protected $loggable = ['first_name' => 'first name']; -> mandatory;
 
-    // protected $loggable = ['first_name' => 'first name'];
+    // protected $loggableLabel = 'name'; -> optional;
+
+    // protected $loggableMorph = ['morphable' => [Model::class => 'attribute']] -> optional
 
     protected static function bootLogActivity()
     {
@@ -44,5 +46,10 @@ trait LogActivity
     public function getLoggableLabel()
     {
         return $this->loggableLabel;
+    }
+
+    public function getLoggableMorph()
+    {
+        return $this->loggableMorph;
     }
 }

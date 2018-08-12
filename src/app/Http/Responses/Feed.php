@@ -70,7 +70,7 @@ class Feed implements Responsable
                 ->map(function ($item) {
                     return [
                         'id' => $item->id,
-                        'model' => $this->model($item),
+                        'model' => $this->model($item->model_class),
                         'action' => [
                             'type' => $item->event,
                             'label' => lcfirst(Events::get($item->event)),
@@ -85,20 +85,21 @@ class Feed implements Responsable
                         'author' => [
                             'name' => $item->createdBy->fullName,
                             'avatarId' => $item->createdBy->avatarId
-                        ]
+                        ],
+                        'morphable' => $this->morphable($item),
                     ];
                 }),
             ];
         }, []);
     }
 
-    private function model($item)
+    private function model($class)
     {
-        $className = collect(
-            explode('\\', $item->model_class)
+        $model = collect(
+            explode('\\', $class)
         )->last();
 
-        return str_replace('_', ' ', snake_case($className));
+        return str_replace('_', ' ', snake_case($model));
     }
 
     private function changes($item)
@@ -119,5 +120,15 @@ class Feed implements Responsable
     private function attribute($key)
     {
         return str_replace(['_id', '_'], ['', ' '], $key);
+    }
+
+    private function morphable($item)
+    {
+        return $item->meta->morphable
+            ? [
+                    'model' => $this->model($item->meta->morphable->model_class),
+                    'label' => $item->meta->morphable->label
+            ]
+            : null;
     }
 }
