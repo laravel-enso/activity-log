@@ -85,6 +85,7 @@ class Feed implements Responsable
                         'author' => [
                             'name' => $item->createdBy->fullName,
                             'avatarId' => $item->createdBy->avatarId,
+                            'id' => $item->createdBy->id,
                         ],
                         'morphable' => $this->morphable($item),
                     ];
