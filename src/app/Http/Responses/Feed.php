@@ -2,7 +2,6 @@
 
 namespace LaravelEnso\ActivityLog\app\Http\Responses;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Responsable;
 use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
@@ -24,34 +23,15 @@ class Feed implements Responsable
     {
         $filters = json_decode($request->get('filters'));
 
-        $query = ActivityLog::with('createdBy')
+        $this->feed = ActivityLog::with('createdBy')
             ->latest()
             ->skip($request->get('offset'))
-            ->take(self::Chunk);
-
-        if ($filters->intervals->min) {
-            $query->where('created_at', '>', Carbon::parse($filters->intervals->min));
-        }
-
-        if ($filters->intervals->max) {
-            $query->where('created_at', '<', Carbon::parse($filters->intervals->max));
-        }
-
-        if (count($filters->user_ids)) {
-            $query->whereIn('created_by', $filters->user_ids);
-        }
-
-        if (count($filters->events)) {
-            $query->whereIn('event', $filters->events);
-        }
-
-        if (count($filters->role_ids)) {
-            $query->whereHas('createdBy', function ($query) use ($filters) {
-                $query->whereIn('role_id', $filters->role_ids);
-            });
-        }
-
-        $this->feed = $query->get();
+            ->between($filters->intervals->min, $filters->intervals->max)
+            ->belongingTo($filters->user_ids)
+            ->forEvents($filters->events)
+            ->forRoles($filters->role_ids)
+            ->take(self::Chunk)
+            ->get();
     }
 
     private function feed()
@@ -84,7 +64,7 @@ class Feed implements Responsable
                         'time' => $item->created_at->format('H:i A'),
                         'author' => [
                             'name' => $item->createdBy->fullName,
-                            'avatarId' => $item->createdBy->avatarId,
+                            'avatarId' => $item->createdBy->avatar->id,
                             'id' => $item->createdBy->id,
                         ],
                         'morphable' => $this->morphable($item),
