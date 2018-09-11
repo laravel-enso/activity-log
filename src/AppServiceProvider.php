@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/routes/api.php');
 
         $this->publishes([
-            __DIR__.'/resources/js' => resource_path('assets/js'),
+            __DIR__.'/resources/js' => resource_path('js'),
         ], 'activityLog-assets');
 
         $this->publishes([
