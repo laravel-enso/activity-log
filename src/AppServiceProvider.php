@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         ], 'activityLog-assets');
 
         $this->publishes([
-            __DIR__.'/resources/js' => resource_path('assets/js'),
+            __DIR__.'/resources/js' => resource_path('js'),
         ], 'enso-assets');
     }
 
