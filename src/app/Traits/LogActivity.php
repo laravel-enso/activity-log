@@ -45,7 +45,7 @@ trait LogActivity
 
     public function getLoggableLabel()
     {
-        return $this->loggableLabel;
+        return $this->loggableLabel ?? 'name';
     }
 
     public function getLoggableMorph()
