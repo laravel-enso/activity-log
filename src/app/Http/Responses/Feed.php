@@ -27,9 +27,9 @@ class Feed implements Responsable
             ->latest()
             ->skip($request->get('offset'))
             ->between($filters->intervals->min, $filters->intervals->max)
-            ->belongingTo($filters->user_ids)
+            ->belongingTo($filters->userIds)
             ->forEvents($filters->events)
-            ->forRoles($filters->role_ids)
+            ->forRoles($filters->roleIds)
             ->take(self::Chunk)
             ->get();
     }
