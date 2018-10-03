@@ -5,26 +5,32 @@ namespace LaravelEnso\ActivityLog\app\Traits;
 use LaravelEnso\ActivityLog\app\Classes\Logger;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
-trait LogActivity
+trait LogsActivity
 {
     // protected $loggable = ['first_name' => 'first name']; -> optional;
 
-    // protected $loggableLabel = 'name'; -> optional;
+    // protected $loggableLabel = 'name'; -> optional, default = 'name';
 
     // protected $loggableMorph = ['morphable' => [Model::class => 'attribute']] -> optional
 
-    protected static function bootLogActivity()
+    protected static function bootLogsActivity()
     {
         self::created(function ($model) {
-            (new Logger($model))->onCreated();
+            if (auth()->user()) {
+                (new Logger($model))->onCreated();
+            }
         });
 
         self::updated(function ($model) {
-            (new Logger($model))->onUpdated();
+            if (auth()->user()) {
+                (new Logger($model))->onUpdated();
+            }
         });
 
         self::deleted(function ($model) {
-            (new Logger($model))->onDeleted();
+            if (auth()->user()) {
+                (new Logger($model))->onDeleted();
+            }
         });
     }
 
