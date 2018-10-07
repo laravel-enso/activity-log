@@ -23,7 +23,7 @@ class Feed implements Responsable
     {
         $filters = json_decode($request->get('filters'));
 
-        $this->feed = ActivityLog::with('createdBy')
+        $this->feed = ActivityLog::with('createdBy.person')
             ->latest()
             ->skip($request->get('offset'))
             ->between($filters->intervals->min, $filters->intervals->max)
@@ -63,7 +63,7 @@ class Feed implements Responsable
                             : null,
                         'time' => $item->created_at->format('H:i A'),
                         'author' => [
-                            'name' => $item->createdBy->fullName,
+                            'name' => $item->createdBy->person->name,
                             'avatarId' => $item->createdBy->avatar->id,
                             'id' => $item->createdBy->id,
                         ],

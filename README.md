@@ -20,7 +20,7 @@ Activity logger dependency for [Laravel Enso](https://laravel-enso.com).
 - events are presented in an useful manner
 - allows the filtering of data depending on a date interval, the roles of the users, the users or the type of events
 - supports create, update, delete and custom event types
-- the models whose changes need to represented, need only to use the `LogActivity` trait. Optionally, 
+- the models whose changes need to represented, need only to use the `LogsActivity` trait. Optionally, 
 you may set additional configuration attributes on the model to further fine tune the way data is logged/represented. 
 
 ### Configuration & Usage
