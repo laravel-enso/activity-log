@@ -68,7 +68,7 @@ class Logger
         collect($this->loggableChanges)
             ->keys()
             ->each(function ($key) {
-                if (!isset($this->model->getLoggable()[$key])) {
+                if (! isset($this->model->getLoggable()[$key])) {
                     return;
                 }
 
@@ -112,7 +112,7 @@ class Logger
     {
         $morph = $this->model->getLoggableMorph();
 
-        if (!$morph) {
+        if (! $morph) {
             return;
         }
 
@@ -120,7 +120,7 @@ class Logger
 
         $modelClass = get_class($this->model->{$morphable});
 
-        if (!isset($morph[$morphable][$modelClass])) {
+        if (! isset($morph[$morphable][$modelClass])) {
             return;
         }
 
