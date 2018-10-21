@@ -53,7 +53,7 @@ class Logger
             'model_id' => $this->model->getKey(),
             'event' => $event,
             'meta' => [
-                'label' => $this->model->{$this->model->getLoggableLabel()},
+                'label' => $this->getLoggableLabel(),
                 'before' => $this->before,
                 'after' => $this->after,
                 'message' => $message,
@@ -106,6 +106,16 @@ class Logger
 
         $this->after[$key] = $this->model
             ->getLoggable()[$key]::get($this->after[$key]);
+    }
+
+    private function getLoggableLabel()
+    {
+        return collect(explode('.', $this->model->getLoggableLabel()))
+            ->reduce(function ($label, $attribute) {
+                $label = $label->{$attribute};
+
+                return $label;
+            }, $this->model);
     }
 
     private function getMorphable()
