@@ -26,7 +26,7 @@ class Feed implements Responsable
         $this->feed = ActivityLog::with('createdBy.person')
             ->latest()
             ->skip($request->get('offset'))
-            ->between($filters->intervals->min, $filters->intervals->max)
+            ->between($filters->interval->min, $filters->interval->max)
             ->belongingTo($filters->userIds)
             ->forEvents($filters->events)
             ->forRoles($filters->roleIds)

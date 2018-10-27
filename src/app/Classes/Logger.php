@@ -32,8 +32,9 @@ class Logger
 
         $this->after = $this->after();
         $this->before = $this->before();
-        $this->parse();
-        $this->log(Events::Updated);
+
+        $this->parse()
+            ->log(Events::Updated);
     }
 
     public function onDeleted()
@@ -86,17 +87,17 @@ class Logger
 
                 $this->updateKey($key);
             });
+
+        return $this;
     }
 
     private function readRelation($key)
     {
-        $this->before[$key] = $this->model
-            ->getLoggable()[$key][0]::find($this->before[$key])
-            ->{$this->model->getLoggable()[$key][1]};
+        $class = key($this->model->getLoggable()[$key]);
+        $attribute = $this->model->getLoggable()[$key][$class];
 
-        $this->after[$key] = $this->model
-            ->getLoggable()[$key][0]::find($this->after[$key])
-            ->{$this->model->getLoggable()[$key][1]};
+        $this->before[$key] = $class::find($this->before[$key])->{$attribute};
+        $this->after[$key] = $class::find($this->after[$key])->{$attribute};
     }
 
     private function readEnum($key)
@@ -112,9 +113,7 @@ class Logger
     {
         return collect(explode('.', $this->model->getLoggableLabel()))
             ->reduce(function ($label, $attribute) {
-                $label = $label->{$attribute};
-
-                return $label;
+                return $label = $label->{$attribute};
             }, $this->model);
     }
 
