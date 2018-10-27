@@ -8,7 +8,7 @@ use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
 class Feed implements Responsable
 {
-    private const Chunk = 30;
+    private const Chunk = 50;
 
     private $feed;
 
