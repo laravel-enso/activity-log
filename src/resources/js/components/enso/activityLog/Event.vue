@@ -23,7 +23,7 @@
                     :index="index"
                     :key="index"/>
                 <span v-if="event.morphable">
-                    {{ __('on') }} {{ event.morphable.model }} <strong>{{ event.morphable.label }}</strong>
+                    {{ __('on') }} {{ __(event.morphable.model) }} <strong>{{ event.morphable.label }}</strong>
                 </span>
             </p>
         </div>
