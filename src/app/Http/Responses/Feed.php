@@ -68,6 +68,7 @@ class Feed implements Responsable
                             'id' => $item->createdBy->id,
                         ],
                         'morphable' => $this->morphable($item),
+                        'relation' => $this->relation($item),
                     ];
                 }),
             ];
@@ -105,10 +106,20 @@ class Feed implements Responsable
 
     private function morphable($item)
     {
-        return $item->meta->morphable
+        return isset($item->meta->morphable)
             ? [
-                    'model' => $this->model($item->meta->morphable->model_class),
-                    'label' => $item->meta->morphable->label,
+                'model' => $this->model($item->meta->morphable->model_class),
+                'label' => $item->meta->morphable->label,
+            ]
+            : null;
+    }
+
+    private function relation($item)
+    {
+        return isset($item->meta->relation)
+            ? [
+                'model' => $this->model($item->meta->relation->model_class),
+                'label' => $item->meta->relation->label,
             ]
             : null;
     }

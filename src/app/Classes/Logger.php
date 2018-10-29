@@ -60,6 +60,7 @@ class Logger
                 'message' => $message,
                 'icon' => $icon,
                 'morphable' => $this->getMorphable(),
+                'relation' => $this->getRelation(),
             ],
         ]);
     }
@@ -117,23 +118,43 @@ class Logger
             }, $this->model);
     }
 
-    private function getMorphable()
+    private function getRelation()
     {
-        $morph = $this->model->getLoggableMorph();
+        $config = $this->model->getLoggableRelation();
 
-        if (! $morph) {
+        if (! $config) {
             return;
         }
 
-        $morphable = key($morph);
+        $relation = key($config);
+
+        $modelClass = get_class($this->model->{$relation});
+
+        $attribute = $config[$relation];
+
+        return [
+            'model_class' => $modelClass,
+            'label' => $this->model->{$relation}->{$attribute},
+        ];
+    }
+
+    private function getMorphable()
+    {
+        $config = $this->model->getLoggableMorph();
+
+        if (! $config) {
+            return;
+        }
+
+        $morphable = key($config);
 
         $modelClass = get_class($this->model->{$morphable});
 
-        if (! isset($morph[$morphable][$modelClass])) {
+        if (! isset($config[$morphable][$modelClass])) {
             return;
         }
 
-        $attribute = $morph[$morphable][$modelClass];
+        $attribute = $config[$morphable][$modelClass];
 
         return [
             'model_class' => $modelClass,

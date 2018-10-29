@@ -11,6 +11,8 @@ trait LogsActivity
 
     // protected $loggableLabel = 'name'; -> optional, default = 'name'
 
+    // protected $loggableRelation = ['relation' => 'name']' -> optional'
+
     // protected $loggableMorph = ['morphable' => [Model::class => 'attribute']] -> optional
 
     // protected $loggedEvents = ['created'] // optional, default ['created', 'updated', 'deleted'];
@@ -59,9 +61,14 @@ trait LogsActivity
         return $this->loggableLabel ?? 'name';
     }
 
+    public function getLoggableRelation()
+    {
+        return $this->loggableRelation ?? null;
+    }
+
     public function getLoggableMorph()
     {
-        return $this->loggableMorph;
+        return $this->loggableMorph ?? null;
     }
 
     public function getLoggedEvents()
