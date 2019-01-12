@@ -15,6 +15,6 @@ class Events extends Enum
         self::Created => 'created',
         self::Updated => 'updated',
         self::Deleted => 'deleted',
-        self::Custom => 'custom'
+        self::Custom => 'custom',
     ];
 }
