@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\ActivityLog\app\Classes;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
@@ -177,7 +178,14 @@ class Logger
         return collect($this->model->getOriginal())
             ->intersectByKeys($this->loggableChanges)
             ->map(function ($value, $key) {
-                settype($value, gettype($this->after[$key]));
+                if ($this->after[$key] instanceof Carbon) {
+                    $value = Carbon::parse($value)
+                        ->format(config('enso.config.phpDateFormat'));
+                    $this->after[$key] = $this->after[$key]
+                        ->format(config('enso.config.phpDateFormat'));
+                } else {
+                    settype($value, gettype($this->after[$key]));
+                }
 
                 return $value;
             })
