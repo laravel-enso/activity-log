@@ -5,11 +5,10 @@ namespace LaravelEnso\ActivityLog\app\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\TrackWho\app\Traits\CreatedBy;
-use LaravelEnso\Multitenancy\app\Traits\SystemConnection;
 
 class ActivityLog extends Model
 {
-    use CreatedBy, SystemConnection;
+    use CreatedBy;
 
     protected $fillable = [
         'model_class', 'model_id', 'model_identifier', 'event', 'meta',
