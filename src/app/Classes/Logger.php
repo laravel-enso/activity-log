@@ -71,7 +71,7 @@ class Logger
         collect($this->loggableChanges)
             ->keys()
             ->each(function ($key) {
-                if (! isset($this->model->getLoggable()[$key])) {
+                if (!isset($this->model->getLoggable()[$key])) {
                     return;
                 }
 
@@ -123,7 +123,7 @@ class Logger
     {
         $config = $this->model->getLoggableRelation();
 
-        if (! $config) {
+        if (!$config) {
             return;
         }
 
@@ -143,7 +143,7 @@ class Logger
     {
         $config = $this->model->getLoggableMorph();
 
-        if (! $config) {
+        if (!$config) {
             return;
         }
 
@@ -151,15 +151,22 @@ class Logger
 
         $modelClass = get_class($this->model->{$morphable});
 
-        if (! isset($config[$morphable][$modelClass])) {
+        if (!isset($config[$morphable][$modelClass])) {
             return;
         }
 
         $attribute = $config[$morphable][$modelClass];
 
+        $label = collect(explode('.', $attribute))
+            ->reduce(function ($value, $segment) {
+                $value = $value->{$segment};
+
+                return $value;
+            }, $this->model->{$morphable});
+
         return [
             'model_class' => $modelClass,
-            'label' => $this->model->{$morphable}->{$attribute},
+            'label' => $label,
         ];
     }
 
