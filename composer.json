@@ -20,10 +20,9 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel-enso/core": "3.7.*",
-        "laravel-enso/select": "2.8.*",
-        "laravel-enso/trackwho": "1.7.*",
-        "laravel-enso/vuecomponents": "2.7.*"
+        "laravel-enso/core": "4.0.*",
+        "laravel-enso/select": "3.0.*",
+        "laravel-enso/trackwho": "1.7.*"
     },
     "autoload": {
         "psr-4": {
