@@ -25,7 +25,7 @@ you may set additional configuration attributes on the model to further fine tun
 
 ### Configuration & Usage
 
-Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/packages/activity-log.html)
+Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/backend/activity-log.html)
 
 ### Contributions
 
