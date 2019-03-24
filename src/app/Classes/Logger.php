@@ -187,9 +187,9 @@ class Logger
             ->map(function ($value, $key) {
                 if ($this->after[$key] instanceof Carbon) {
                     $value = Carbon::parse($value)
-                        ->format(config('enso.config.phpDateFormat'));
+                        ->format(config('enso.config.dateFormat'));
                     $this->after[$key] = $this->after[$key]
-                        ->format(config('enso.config.phpDateFormat'));
+                        ->format(config('enso.config.dateFormat'));
                 } else {
                     settype($value, gettype($this->after[$key]));
                 }
