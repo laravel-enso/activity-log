@@ -36,43 +36,40 @@ class Feed implements Responsable
 
     private function feed()
     {
-        $days = $this->feed->map(function ($item) {
-            return $item->created_at->format('Y-m-d');
-        })->unique()
-            ->values();
-
-        return $days->map(function ($day) {
+        return $this->days()->map(function ($day) {
             return [
                 'date' => $day,
-                'list' => $this->feed->filter(function ($item) use ($day) {
-                    return $item['created_at']->format('Y-m-d') === $day;
-                })->values()
-                ->map(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'model' => $this->model($item->model_class),
-                        'action' => [
-                            'type' => $item->event,
-                            'label' => lcfirst(Events::get($item->event)),
-                            'icon' => $item->meta->icon,
-                        ],
-                        'label' => $item->meta->label,
-                        'changes' => $this->changes($item),
-                        'message' => $item->event === Events::Custom
-                            ? $item->meta->message
-                            : null,
-                        'time' => $item->created_at->format('H:i A'),
-                        'author' => [
-                            'name' => $item->createdBy->person->name,
-                            'avatarId' => $item->createdBy->avatar->id,
-                            'id' => $item->createdBy->id,
-                        ],
-                        'morphable' => $this->morphable($item),
-                        'relation' => $this->relation($item),
-                    ];
+                'list' => $this->dayItems($day)->map(function ($item) {
+                    return $this->resource($item);
                 }),
             ];
         }, []);
+    }
+
+    private function resource($item)
+    {
+        return [
+            'id' => $item->id,
+            'model' => $this->model($item->model_class),
+            'action' => [
+                'type' => $item->event,
+                'label' => lcfirst(Events::get($item->event)),
+                'icon' => $item->meta->icon,
+            ],
+            'label' => $item->meta->label,
+            'changes' => $this->changes($item),
+            'message' => $item->event === Events::Custom
+                ? $item->meta->message
+                : null,
+            'time' => $item->created_at->format('H:i A'),
+            'author' => [
+                'name' => $item->createdBy->person->name,
+                'avatarId' => $item->createdBy->avatar->id,
+                'id' => $item->createdBy->id,
+            ],
+            'morphable' => $this->morphable($item),
+            'relation' => $this->relation($item),
+        ];
     }
 
     private function model($class)
@@ -122,5 +119,19 @@ class Feed implements Responsable
                 'label' => $item->meta->relation->label,
             ]
             : null;
+    }
+
+    private function dayItems($day)
+    {
+        return $this->feed->filter(function ($item) use ($day) {
+            return $item['created_at']->format('Y-m-d') === $day;
+        })->values();
+    }
+
+    private function days()
+    {
+        return $this->feed->map(function ($item) {
+            return $item->created_at->format('Y-m-d');
+        })->unique()->values();
     }
 }

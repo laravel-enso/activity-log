@@ -11,8 +11,8 @@ class Logger
 {
     private $model;
     private $loggableChanges;
-    private $before = null;
-    private $after = null;
+    private $before;
+    private $after;
 
     public function __construct(Model $model)
     {
@@ -34,8 +34,7 @@ class Logger
         $this->after = $this->after();
         $this->before = $this->before();
 
-        $this->parse()
-            ->log(Events::Updated);
+        $this->parse()->log(Events::Updated);
     }
 
     public function onDeleted()
@@ -128,9 +127,7 @@ class Logger
         }
 
         $relation = key($config);
-
         $modelClass = get_class($this->model->{$relation});
-
         $attribute = $config[$relation];
 
         return [
@@ -148,7 +145,6 @@ class Logger
         }
 
         $morphable = key($config);
-
         $modelClass = get_class($this->model->{$morphable});
 
         if (! isset($config[$morphable][$modelClass])) {
@@ -159,9 +155,7 @@ class Logger
 
         $label = collect(explode('.', $attribute))
             ->reduce(function ($value, $segment) {
-                $value = $value->{$segment};
-
-                return $value;
+                return $value->{$segment};
             }, $this->model->{$morphable});
 
         return [
@@ -195,8 +189,7 @@ class Logger
                 }
 
                 return $value;
-            })
-            ->toArray();
+            })->toArray();
     }
 
     private function after()

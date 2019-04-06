@@ -15,12 +15,9 @@ class CreateActivityLogsTable extends Migration
             $table->string('model_id');
 
             $table->tinyInteger('event');
-
-            $table->json('meta')
-                ->nullable();
+            $table->json('meta')->nullable();
 
             $table->integer('created_by')->unsigned()->nullable();
-
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->timestamps();

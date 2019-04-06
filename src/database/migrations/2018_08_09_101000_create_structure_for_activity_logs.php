@@ -11,6 +11,4 @@ class CreateStructureForActivityLogs extends StructureMigration
     protected $menu = [
         'name' => 'Activity Log', 'icon' => 'shoe-prints', 'route' => 'core.activityLogs.index', 'order_index' => 900, 'has_children' => false,
     ];
-
-    protected $parentMenu = '';
 }

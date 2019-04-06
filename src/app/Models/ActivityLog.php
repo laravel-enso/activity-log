@@ -18,35 +18,33 @@ class ActivityLog extends Model
 
     public function scopeBetween($query, $startDate, $endDate)
     {
-        if ($startDate) {
+        $query->when($startDate, function ($query) use ($startDate) {
             $query->where('created_at', '>', Carbon::parse($startDate));
-        }
-
-        if ($endDate) {
+        })->when($endDate, function ($query) use ($endDate) {
             $query->where('created_at', '<', Carbon::parse($endDate));
-        }
+        });
     }
 
     public function scopeBelongingTo($query, $userIds)
     {
-        if (count($userIds)) {
+        $query->when(count($userIds), function ($query) use ($userIds) {
             $query->whereIn('created_by', $userIds);
-        }
+        });
     }
 
     public function scopeForEvents($query, $events)
     {
-        if (count($events)) {
+        $query->when(count($events), function ($query) use ($events) {
             $query->whereIn('event', $events);
-        }
+        });
     }
 
     public function scopeForRoles($query, $roleIds)
     {
-        if (count($roleIds)) {
+        $query->when(count($roleIds), function ($query) use ($roleIds) {
             $query->whereHas('createdBy', function ($query) use ($roleIds) {
                 $query->whereIn('role_id', $roleIds);
             });
-        }
+        });
     }
 }
