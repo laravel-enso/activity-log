@@ -15,13 +15,20 @@ class ActivityLog extends Model
     ];
 
     protected $casts = ['meta' => 'object'];
+    protected $dates = ['created_at', 'updated_at'];
 
     public function scopeBetween($query, $startDate, $endDate)
     {
         $query->when($startDate, function ($query) use ($startDate) {
-            $query->where('created_at', '>', Carbon::parse($startDate));
+            $query->where('created_at', '>', Carbon::createFromFormat(
+                config('enso.config.dateFormat'),
+                $startDate
+            )->format('Y-m-d'));
         })->when($endDate, function ($query) use ($endDate) {
-            $query->where('created_at', '<', Carbon::parse($endDate));
+            $query->where('created_at', '<', Carbon::createFromFormat(
+                config('enso.config.dateFormat'),
+                $endDate
+            )->format('Y-m-d'));
         });
     }
 
