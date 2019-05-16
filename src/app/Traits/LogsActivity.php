@@ -2,7 +2,7 @@
 
 namespace LaravelEnso\ActivityLog\app\Traits;
 
-use LaravelEnso\ActivityLog\app\Classes\Logger;
+use LaravelEnso\ActivityLog\app\Services\Logger;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
 trait LogsActivity

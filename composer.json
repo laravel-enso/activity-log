@@ -1,13 +1,13 @@
 {
-    "name": "laravel-enso/activitylog",
+    "name": "laravel-enso/activity-log",
     "description": "User activity log dependency for Laravel Enso",
     "keywords": [
         "laravel-enso",
-        "activitylog",
+        "activity-log",
         "activity-log",
         "logging"
     ],
-    "homepage": "https://github.com/laravel-enso/ActivityLog",
+    "homepage": "https://github.com/laravel-enso/activity-log",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -20,9 +20,9 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel-enso/core": "4.2.*",
-        "laravel-enso/select": "3.0.*",
-        "laravel-enso/trackwho": "1.7.*"
+        "laravel-enso/core": "4.3.*",
+        "laravel-enso/select": "3.1.*",
+        "laravel-enso/track-who": "1.8.*"
     },
     "autoload": {
         "psr-4": {

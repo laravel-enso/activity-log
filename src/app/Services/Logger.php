@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\ActivityLog\app\Classes;
+namespace LaravelEnso\ActivityLog\app\Services;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

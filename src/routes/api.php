@@ -2,8 +2,8 @@
 
 Route::middleware(['web', 'auth', 'core'])
     ->namespace('LaravelEnso\ActivityLog\app\Http\Controllers')
-    ->prefix('core')->as('core.')
+    ->prefix('api/core/activityLogs')
+    ->as('core.activityLogs.')
     ->group(function () {
-        Route::resource('activityLogs', 'ActivityLogController')
-            ->only('index');
+        Route::get('', 'Index')->name('index');
     });

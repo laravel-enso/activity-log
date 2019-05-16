@@ -1,8 +1,8 @@
 <?php
 
-use LaravelEnso\StructureManager\app\Classes\StructureMigration;
+use LaravelEnso\Migrator\app\Database\Migration;
 
-class CreateStructureForActivityLogs extends StructureMigration
+class CreateStructureForActivityLogs extends Migration
 {
     protected $permissions = [
         ['name' => 'core.activityLogs.index', 'description' => 'Show index for activity log', 'type' => 0, 'is_default' => false],
