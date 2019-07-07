@@ -44,7 +44,7 @@ class Logger
 
     public function onEvent($message, $icon, $eventType = null)
     {
-        $eventType = $eventType != null ? $eventType : Events::Custom;
+        $eventType = $eventType ?? Events::Custom;
         $this->log($eventType, $message, $icon);
     }
 

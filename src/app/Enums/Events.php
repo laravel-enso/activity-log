@@ -13,12 +13,12 @@ class Events extends Enum
 
     protected static function attributes()
     {
-        return config("enso.activity_log.events", []);
+        return config('enso.activity_log.events', []);
     }
 
     public static function isCustom($eventType)
     {
-        return !in_array($eventType, [self::Created, self::Updated, self::Deleted]);
+        return ! in_array($eventType, [self::Created, self::Updated, self::Deleted]);
     }
 
 }
