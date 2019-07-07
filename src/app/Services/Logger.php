@@ -42,9 +42,10 @@ class Logger
         $this->log(Events::Deleted);
     }
 
-    public function onEvent($message, $icon)
+    public function onEvent($message, $icon, $eventType = null)
     {
-        $this->log(Events::Custom, $message, $icon);
+        $eventType = $eventType != null ? $eventType : Events::Custom;
+        $this->log($eventType, $message, $icon);
     }
 
     private function log($event, $message = null, $icon = null)

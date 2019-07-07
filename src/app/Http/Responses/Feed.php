@@ -58,7 +58,7 @@ class Feed implements Responsable
             ],
             'label' => $item->meta->label,
             'changes' => $this->changes($item),
-            'message' => $item->event === Events::Custom
+            'message' => Events::isCustom($item->event)
                 ? $item->meta->message
                 : null,
             'time' => $item->created_at->format('H:i A'),

@@ -10,6 +10,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
+        $this->mergeConfigFrom(__DIR__.'/config/activity_log.php', 'enso.activity_log');
+
         $this->loadRoutesFrom(__DIR__.'/routes/api.php');
     }
 }

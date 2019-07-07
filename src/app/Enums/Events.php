@@ -11,10 +11,14 @@ class Events extends Enum
     const Deleted = 3;
     const Custom = 4;
 
-    protected static $data = [
-        self::Created => 'created',
-        self::Updated => 'updated',
-        self::Deleted => 'deleted',
-        self::Custom => 'custom',
-    ];
+    protected static function attributes()
+    {
+        return config("enso.activity_log.events", []);
+    }
+
+    public static function isCustom($eventType)
+    {
+        return !in_array($eventType, [self::Created, self::Updated, self::Deleted]);
+    }
+
 }

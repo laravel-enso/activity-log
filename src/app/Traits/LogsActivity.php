@@ -42,9 +42,9 @@ trait LogsActivity
         return $this->hasMany(ActivityLog::class);
     }
 
-    public function logEvent($message, $icon = null)
+    public function logEvent($message, $icon = null, $eventType = null)
     {
-        (new Logger($this))->onEvent($message, $icon);
+        (new Logger($this))->onEvent($message, $icon, $eventType);
     }
 
     public function getLoggable()
