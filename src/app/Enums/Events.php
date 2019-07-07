@@ -20,5 +20,4 @@ class Events extends Enum
     {
         return ! in_array($eventType, [self::Created, self::Updated, self::Deleted]);
     }
-
 }
