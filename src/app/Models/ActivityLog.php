@@ -15,6 +15,7 @@ class ActivityLog extends Model
     ];
 
     protected $casts = ['meta' => 'object'];
+
     protected $dates = ['created_at', 'updated_at'];
 
     public function scopeBetween($query, $startDate, $endDate)

@@ -19,9 +19,10 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
-        "laravel-enso/core": "4.3.*",
-        "laravel-enso/select": "3.1.*",
+        "laravel-enso/core": "4.4.*",
+        "laravel-enso/enums": "1.0.*",
+        "laravel-enso/migrator": "1.0.*",
+        "laravel-enso/select": "3.2.*",
         "laravel-enso/track-who": "1.8.*"
     },
     "autoload": {

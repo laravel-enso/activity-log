@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\ActivityLog\app\Traits;
 
+use Illuminate\Support\Facades\Auth;
 use LaravelEnso\ActivityLog\app\Services\Logger;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
@@ -16,21 +17,21 @@ trait LogsActivity
     protected static function bootLogsActivity()
     {
         self::created(function ($model) {
-            if (auth()->check()
+            if (Auth::check()
                 && collect($model->getLoggedEvents())->contains('created')) {
                 (new Logger($model))->onCreated();
             }
         });
 
         self::updated(function ($model) {
-            if (auth()->check()
+            if (Auth::check()
                 && collect($model->getLoggedEvents())->contains('updated')) {
                 (new Logger($model))->onUpdated();
             }
         });
 
         self::deleted(function ($model) {
-            if (auth()->check()
+            if (Auth::check()
                 && collect($model->getLoggedEvents())->contains('deleted')) {
                 (new Logger($model))->onDeleted();
             }

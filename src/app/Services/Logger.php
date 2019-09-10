@@ -184,9 +184,11 @@ class Logger
                         ->format(config('enso.config.dateFormat'));
                     $this->after[$key] = $this->after[$key]
                         ->format(config('enso.config.dateFormat'));
-                } else {
-                    settype($value, gettype($this->after[$key]));
+
+                    return $value;
                 }
+
+                settype($value, gettype($this->after[$key]));
 
                 return $value;
             })->toArray();
@@ -207,9 +209,7 @@ class Logger
     {
         return collect($this->model->getLoggable())
             ->map(function ($value, $key) {
-                return is_int($key)
-                    ? $value
-                    : $key;
+                return is_int($key) ? $value : $key;
             });
     }
 }
