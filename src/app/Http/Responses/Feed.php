@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\ActivityLog\app\Http\Responses;
 
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Responsable;
 use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
@@ -78,7 +79,7 @@ class Feed implements Responsable
             explode('\\', $class)
         )->last();
 
-        return str_replace('_', ' ', snake_case($model));
+        return str_replace('_', ' ', Str::snake($model));
     }
 
     private function changes($item)
