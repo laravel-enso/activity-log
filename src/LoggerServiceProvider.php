@@ -11,6 +11,8 @@ class LoggerServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Logger::register($this->register);
+        if(! app()->environment('testing')) {
+            Logger::register($this->register);
+        }
     }
 }
