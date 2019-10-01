@@ -9,10 +9,10 @@ class CreateActivityLogsTable extends Migration
     public function up()
     {
         Schema::create('activity_logs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->string('model_class');
-            $table->string('model_id');
+            $table->string('model_class')->index();
+            $table->string('model_id')->index();
 
             $table->tinyInteger('event');
             $table->json('meta')->nullable();

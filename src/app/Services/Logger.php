@@ -2,214 +2,75 @@
 
 namespace LaravelEnso\ActivityLog\app\Services;
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\ActivityLog\app\Enums\Events;
-use LaravelEnso\ActivityLog\app\Models\ActivityLog;
+use LaravelEnso\ActivityLog\app\Enums\Observers;
 
 class Logger
 {
-    private $model;
-    private $loggableChanges;
-    private $before;
-    private $after;
+    private $models;
+    private $ignored;
 
-    public function __construct(Model $model)
+    public function __construct()
     {
-        $this->model = $model;
-        $this->loggableChanges = $this->loggableChanges();
+        $this->models = collect();
+        $this->ignored = collect();
     }
 
-    public function onCreated()
+    public function register($models)
     {
-        $this->log(Events::Created);
+        collect($models)->each(function ($config, $model) {
+            $this->models->put($model, new Config($model, $config));
+        });
     }
 
-    public function onUpdated()
+    public function observe()
     {
-        if ($this->loggableChanges->isEmpty()) {
-            return;
+        $this->monitored()->each(function($config, $model) {
+            $config->events()->intersect(App::make(Observers::class)::keys())
+                ->each(function($event) use ($model) {
+                    $model::observe(App::make(Observers::class)::get($event));
+                });
+        });
+    }
+
+    public function config($model)
+    {
+        return $this->models->get(
+            $model instanceOf Model ? get_class($model) : $model
+        );
+    }
+
+    public function remove($models)
+    {
+        collect($models)->each(function ($model) {
+            $this->models->forget($model);
+        });
+    }
+
+    public function all()
+    {
+        return $this->models;
+    }
+
+    public function monitored()
+    {
+        return $this->models->filter(function ($config) {
+            return ! $this->ignored->contains($config->alias());
+        });
+    }
+
+    public function ignore($model)
+    {
+        if (! $this->ignored->contains($model['alias'])) {
+            $this->ignored->push($model['alias']);
         }
-
-        $this->after = $this->after();
-        $this->before = $this->before();
-
-        $this->parse()->log(Events::Updated);
     }
 
-    public function onDeleted()
+    public function unignore($model)
     {
-        $this->log(Events::Deleted);
-    }
-
-    public function onEvent($message, $icon)
-    {
-        $this->log(Events::Custom, $message, $icon);
-    }
-
-    private function log($event, $message = null, $icon = null)
-    {
-        ActivityLog::create([
-            'model_class' => get_class($this->model),
-            'model_id' => $this->model->getKey(),
-            'event' => $event,
-            'meta' => [
-                'label' => $this->getLoggableLabel(),
-                'before' => $this->before,
-                'after' => $this->after,
-                'message' => $message,
-                'icon' => $icon,
-                'morphable' => $this->getMorphable(),
-                'relation' => $this->getRelation(),
-            ],
-        ]);
-    }
-
-    private function parse()
-    {
-        collect($this->loggableChanges)
-            ->keys()
-            ->each(function ($key) {
-                if (! isset($this->model->getLoggable()[$key])) {
-                    return;
-                }
-
-                if (is_array($this->model->getLoggable()[$key])) {
-                    $this->readRelation($key);
-
-                    return;
-                }
-
-                if (class_exists($this->model->getLoggable()[$key])) {
-                    $this->readEnum($key);
-
-                    return;
-                }
-
-                $this->updateKey($key);
-            });
-
-        return $this;
-    }
-
-    private function readRelation($key)
-    {
-        $class = key($this->model->getLoggable()[$key]);
-        $attribute = $this->model->getLoggable()[$key][$class];
-
-        $this->before[$key] = $class::find($this->before[$key])->{$attribute};
-        $this->after[$key] = $class::find($this->after[$key])->{$attribute};
-    }
-
-    private function readEnum($key)
-    {
-        $this->before[$key] = $this->model
-            ->getLoggable()[$key]::get($this->before[$key]);
-
-        $this->after[$key] = $this->model
-            ->getLoggable()[$key]::get($this->after[$key]);
-    }
-
-    private function getLoggableLabel()
-    {
-        return collect(explode('.', $this->model->getLoggableLabel()))
-            ->reduce(function ($label, $attribute) {
-                return $label = $label->{$attribute};
-            }, $this->model);
-    }
-
-    private function getRelation()
-    {
-        $config = $this->model->getLoggableRelation();
-
-        if (! $config) {
-            return;
+        if ($this->ignored->contains($model['alias'])) {
+            $this->ignored->forget($model['alias']);
         }
-
-        $relation = key($config);
-        $modelClass = get_class($this->model->{$relation});
-        $attribute = $config[$relation];
-
-        return [
-            'model_class' => $modelClass,
-            'label' => $this->model->{$relation}->{$attribute},
-        ];
-    }
-
-    private function getMorphable()
-    {
-        $config = $this->model->getLoggableMorph();
-
-        if (! $config) {
-            return;
-        }
-
-        $morphable = key($config);
-        $modelClass = get_class($this->model->{$morphable});
-
-        if (! isset($config[$morphable][$modelClass])) {
-            return;
-        }
-
-        $attribute = $config[$morphable][$modelClass];
-
-        $label = collect(explode('.', $attribute))
-            ->reduce(function ($value, $segment) {
-                return $value->{$segment};
-            }, $this->model->{$morphable});
-
-        return [
-            'model_class' => $modelClass,
-            'label' => $label,
-        ];
-    }
-
-    private function updateKey($key)
-    {
-        $newKey = $this->model->getLoggable()[$key];
-
-        $this->before[$newKey] = $this->before[$key];
-        $this->after[$newKey] = $this->after[$key];
-
-        unset($this->before[$key], $this->after[$key]);
-    }
-
-    private function before()
-    {
-        return collect($this->model->getOriginal())
-            ->intersectByKeys($this->loggableChanges)
-            ->map(function ($value, $key) {
-                if ($this->after[$key] instanceof Carbon) {
-                    $value = Carbon::parse($value)
-                        ->format(config('enso.config.dateFormat'));
-                    $this->after[$key] = $this->after[$key]
-                        ->format(config('enso.config.dateFormat'));
-
-                    return $value;
-                }
-
-                settype($value, gettype($this->after[$key]));
-
-                return $value;
-            })->toArray();
-    }
-
-    private function after()
-    {
-        return $this->loggableChanges->toArray();
-    }
-
-    private function loggableChanges()
-    {
-        return collect($this->model->getDirty())
-            ->intersectByKeys($this->loggableKeys()->flip());
-    }
-
-    private function loggableKeys()
-    {
-        return collect($this->model->getLoggable())
-            ->map(function ($value, $key) {
-                return is_int($key) ? $value : $key;
-            });
     }
 }

@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Providers;
+
+use LaravelEnso\ActivityLog\app\Facades\Logger;
+use LaravelEnso\ActivityLog\LoggerServiceProvider as ServiceProvider;
+
+class LoggerServiceProvider extends ServiceProvider
+{
+    public $register = [
+        // MyModel::class => [
+        //    'alias' => 'myModel',
+        //    'label' => 'name',
+        //    'events' => [Events::Created, Events::Updated, Events::Deleted],
+        //    'attributes' => ['name', 'email'],
+        //],
+    ];
+
+    public function boot()
+    {
+        parent::boot();
+
+        Logger::observe();
+    }
+}
