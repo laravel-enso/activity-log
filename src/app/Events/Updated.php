@@ -77,7 +77,7 @@ class Updated implements Loggable, ProvidesAttributes
         if (! isset($this->attributes[$attribute])) {
             return $value;
         }
-        
+
         if ($this->attributes[$attribute] instanceof Obj) {
             return $this->readRelation($this->attributes[$attribute], $value);
         }
