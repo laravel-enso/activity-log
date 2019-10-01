@@ -5,7 +5,6 @@ namespace LaravelEnso\ActivityLog\app\Services;
 use ReflectionClass;
 use BadMethodCallException;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\Helpers\app\Classes\Obj;
 
 class Config
@@ -41,7 +40,7 @@ class Config
 
         if (! isset($config['alias'])) {
             $config['alias'] = $this->defaultAlias();
-        };
+        }
 
         return  $config;
     }

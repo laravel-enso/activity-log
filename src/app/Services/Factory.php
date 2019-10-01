@@ -43,18 +43,18 @@ class Factory
             'label' => $this->label(),
         ] + $this->providedAttributes();
     }
-    
+
     private function label()
     {
         return collect(explode('.', $this->config->label()))
-            ->reduce(function($label, $attribute) {
+            ->reduce(function ($label, $attribute) {
                 return $label->{$attribute};
             }, $this->event->model());
     }
 
     private function providedAttributes()
     {
-        return $this->event instanceOf ProvidesAttributes
+        return $this->event instanceof ProvidesAttributes
             ? $this->event->attributes()
             : [];
     }

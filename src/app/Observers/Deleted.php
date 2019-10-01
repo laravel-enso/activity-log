@@ -7,7 +7,8 @@ use LaravelEnso\ActivityLog\app\Events\Deleted as Event;
 
 class Deleted
 {
-    public function deleted($model) {
+    public function deleted($model)
+    {
         (new Factory(new Event($model)))->create();
     }
 }

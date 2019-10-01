@@ -38,7 +38,7 @@ class Updated implements Loggable, ProvidesAttributes
 
         $index = 0;
 
-        $changes = $this->loggableChanges->reduce(function($message) use (&$index) {
+        $changes = $this->loggableChanges->reduce(function ($message) use (&$index) {
             return $message->push(":attribute{++$index} was changed from :from{$index} to :to{$index}");
         }, collect())->implode(', ');
 
@@ -49,12 +49,12 @@ class Updated implements Loggable, ProvidesAttributes
     {
         return 'pencil-alt';
     }
-    
+
     public function attributes(): array
     {
         $index = 0;
 
-        return $this->loggableChanges->reduce(function($attributes, $attribute) use (&$index) {
+        return $this->loggableChanges->reduce(function ($attributes, $attribute) use (&$index) {
             $index++;
 
             return $attributes->put(
@@ -70,7 +70,6 @@ class Updated implements Loggable, ProvidesAttributes
     private function attribute($attribute)
     {
         return str_replace(['_id', '_'], ['', ' '], $attribute);
-
     }
 
     private function parse($attribute, $value)
@@ -78,8 +77,8 @@ class Updated implements Loggable, ProvidesAttributes
         if (! isset($this->attributes[$attribute])) {
             return $value;
         }
-        
-        if ($this->attributes[$attribute] instanceOf Obj) {
+
+        if ($this->attributes[$attribute] instanceof Obj) {
             return $this->readRelation($this->attributes[$attribute], $value);
         }
 
@@ -101,7 +100,7 @@ class Updated implements Loggable, ProvidesAttributes
     private function readEnum($enum, $value)
     {
         value($enum)::localisation(false);
-    
+
         return value($enum)::get($value);
     }
 
