@@ -54,7 +54,7 @@ class Factory
 
     private function providedAttributes()
     {
-        return $this->event instanceOf ProvidesAttributes
+        return $this->event instanceof ProvidesAttributes
             ? $this->event->attributes()
             : [];
     }

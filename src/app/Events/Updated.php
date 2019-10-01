@@ -79,7 +79,7 @@ class Updated implements Loggable, ProvidesAttributes
             return $value;
         }
         
-        if ($this->attributes[$attribute] instanceOf Obj) {
+        if ($this->attributes[$attribute] instanceof Obj) {
             return $this->readRelation($this->attributes[$attribute], $value);
         }
 
@@ -118,33 +118,5 @@ class Updated implements Loggable, ProvidesAttributes
             ->map(function ($value, $key) {
                 return is_int($key) ? $value : $key;
             });
-    }
-
-    private function getMorphable()
-    {
-        $config = $this->model->getLoggableMorph();
-
-        if (! $config) {
-            return;
-        }
-
-        $morphable = key($config);
-        $modelClass = get_class($this->model->{$morphable});
-
-        if (! isset($config[$morphable][$modelClass])) {
-            return;
-        }
-
-        $attribute = $config[$morphable][$modelClass];
-
-        $label = collect(explode('.', $attribute))
-            ->reduce(function ($value, $segment) {
-                return $value->{$segment};
-            }, $this->model->{$morphable});
-
-        return [
-            'model_class' => $modelClass,
-            'label' => $label,
-        ];
     }
 }

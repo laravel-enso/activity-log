@@ -37,7 +37,7 @@ class Logger
     public function config($model)
     {
         return $this->models->get(
-            $model instanceOf Model ? get_class($model) : $model
+            $model instanceof Model ? get_class($model) : $model
         );
     }
 
