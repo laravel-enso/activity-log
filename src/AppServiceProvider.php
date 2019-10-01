@@ -23,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/routes/api.php');
 
-        $this->mergeConfigFrom(__DIR__.'/config/activityLogger.php', 'enso.activityLogger');
-
         return $this;
     }
 
