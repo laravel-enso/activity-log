@@ -39,7 +39,7 @@ class Updated implements Loggable, ProvidesAttributes
         $index = 0;
 
         $changes = $this->loggableChanges->reduce(function ($message) use (&$index) {
-            return $message->push(":attribute".(++$index)." was changed from :from{$index} to :to{$index}");
+            return $message->push(':attribute'.(++$index)." was changed from :from{$index} to :to{$index}");
         }, collect())->implode(', ');
 
         return $changes ? "{$message} with the following changes: {$changes}" : $message;
