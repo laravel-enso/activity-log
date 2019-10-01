@@ -26,9 +26,9 @@ class Logger
 
     public function observe()
     {
-        $this->monitored()->each(function($config, $model) {
+        $this->monitored()->each(function ($config, $model) {
             $config->events()->intersect(App::make(Observers::class)::keys())
-                ->each(function($event) use ($model) {
+                ->each(function ($event) use ($model) {
                     $model::observe(App::make(Observers::class)::get($event));
                 });
         });
