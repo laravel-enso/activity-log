@@ -27,7 +27,11 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelEnso\\ActivityLog\\": "src/",
+            "LaravelEnso\\ActivityLog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "LaravelEnso\\ActivityLog\\Test": "tests/"
         }
     },
