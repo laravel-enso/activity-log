@@ -30,6 +30,11 @@
             "LaravelEnso\\ActivityLog\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelEnso\\ActivityLog\\Test": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
