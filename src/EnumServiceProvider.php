@@ -10,7 +10,7 @@ class EnumServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->register[] = App::make(Events::class)->all();
+        $this->register['loggableEvents'] = App::make(Events::class);
 
         parent::boot();
     }
