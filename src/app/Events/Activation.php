@@ -8,7 +8,7 @@ use LaravelEnso\ActivityLog\app\Traits\IsLoggable;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 
-class Activation implements Loggable,ProvidesAttributes
+class Activation implements Loggable, ProvidesAttributes
 {
     use IsLoggable;
 
@@ -37,8 +37,7 @@ class Activation implements Loggable,ProvidesAttributes
     public function attributes(): array
     {
         return [
-            'activation' => $this->model->isActive() ? 'active' : 'inactive'
+            'activation' => $this->model->isActive() ? 'active' : 'inactive',
         ];
     }
 }
-
