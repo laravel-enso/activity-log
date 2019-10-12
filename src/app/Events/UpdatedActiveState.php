@@ -1,6 +1,7 @@
 <?php
 
 namespace LaravelEnso\ActivityLog\App\Events;
+
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Traits\IsLoggable;

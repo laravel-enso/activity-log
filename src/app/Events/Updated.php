@@ -43,7 +43,7 @@ class Updated implements Loggable, ProvidesAttributes
         }, collect());
 
         return $changes->isNotEmpty() ?
-            $changes->prepend("with the following changes:")
+            $changes->prepend('with the following changes:')
                 ->prepend($message)->toArray()
             : $message;
     }
