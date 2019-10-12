@@ -26,7 +26,7 @@ class Activation implements Loggable, ProvidesAttributes
 
     public function message(): string
     {
-        return ':user makes :model :label :activation';
+        return ':user :activation :model :label';
     }
 
     public function icon(): string
@@ -37,7 +37,7 @@ class Activation implements Loggable, ProvidesAttributes
     public function attributes(): array
     {
         return [
-            'activation' => $this->model->isActive() ? 'active' : 'inactive',
+            'activation' => $this->model->isActive() ? 'activated' : 'deactivated',
         ];
     }
 }
