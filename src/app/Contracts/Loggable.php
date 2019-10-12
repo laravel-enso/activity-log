@@ -10,7 +10,9 @@ interface Loggable
 
     public function model(): Model;
 
-    public function message(): string;
+    public function message();
 
     public function icon(): string;
+
+    public function iconClass(): string;
 }

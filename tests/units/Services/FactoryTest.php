@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use LaravelEnso\Core\app\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\People\app\Models\Person;
 use Illuminate\Database\Schema\Blueprint;
+use LaravelEnso\People\app\Models\Person;
 use LaravelEnso\ActivityLog\app\Facades\Logger;
 use LaravelEnso\ActivityLog\app\Services\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -177,6 +177,11 @@ class LoggableStub implements Loggable {
     }
 
     public function icon(): string
+    {
+        return 'icon';
+    }
+    
+    public function iconClass(): string
     {
         return 'icon';
     }

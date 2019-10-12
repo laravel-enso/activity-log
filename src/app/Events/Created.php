@@ -23,7 +23,7 @@ class Created implements Loggable
         return Events::Created;
     }
 
-    public function message(): string
+    public function message()
     {
         return ':user created :model :label';
     }
@@ -31,5 +31,10 @@ class Created implements Loggable
     public function icon(): string
     {
         return 'plus';
+    }
+
+    public function iconClass(): string
+    {
+        return 'is-success';
     }
 }

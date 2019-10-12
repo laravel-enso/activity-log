@@ -23,7 +23,7 @@ class Deleted implements Loggable
         return Events::Deleted;
     }
 
-    public function message(): string
+    public function message()
     {
         return ':user deleted :model :label';
     }
@@ -31,5 +31,10 @@ class Deleted implements Loggable
     public function icon(): string
     {
         return 'trash-alt';
+    }
+
+    public function iconClass(): string
+    {
+        return 'is-danger';
     }
 }

@@ -32,7 +32,7 @@ class Updated implements Loggable, ProvidesAttributes
         return Events::Updated;
     }
 
-    public function message(): string
+    public function message()
     {
         $message = ':user updated :model :label';
 
@@ -40,9 +40,12 @@ class Updated implements Loggable, ProvidesAttributes
 
         $changes = $this->loggableChanges->reduce(function ($message) use (&$index) {
             return $message->push(':attribute'.(++$index)." was changed from :from{$index} to :to{$index}");
-        }, collect())->implode(', ');
+        }, collect());
 
-        return $changes ? "{$message} with the following changes: {$changes}" : $message;
+        return $changes->isNotEmpty() ?
+            $changes->prepend("with the following changes:")
+                ->prepend($message)->toArray()
+            : $message;
     }
 
     public function icon(): string
@@ -117,5 +120,10 @@ class Updated implements Loggable, ProvidesAttributes
             ->map(function ($value, $key) {
                 return is_int($key) ? $value : $key;
             });
+    }
+
+    public function iconClass(): string
+    {
+        return 'is-warning';
     }
 }

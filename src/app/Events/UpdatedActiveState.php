@@ -1,14 +1,13 @@
 <?php
 
 namespace LaravelEnso\ActivityLog\App\Events;
-
-use App\Enums\Events;
 use Illuminate\Database\Eloquent\Model;
+use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Traits\IsLoggable;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 
-class Activation implements Loggable, ProvidesAttributes
+class UpdatedActiveState implements Loggable, ProvidesAttributes
 {
     use IsLoggable;
 
@@ -21,12 +20,12 @@ class Activation implements Loggable, ProvidesAttributes
 
     public function type(): int
     {
-        return Events::Activation;
+        return Events::UpdatedActiveState;
     }
 
-    public function message(): string
+    public function message()
     {
-        return ':user :activation :model :label';
+        return ':user :state :model :label';
     }
 
     public function icon(): string
@@ -34,10 +33,17 @@ class Activation implements Loggable, ProvidesAttributes
         return $this->model->isActive() ? 'check' : 'ban';
     }
 
+    public function iconClass(): string
+    {
+        return $this->model->isActive()
+            ? 'is-success'
+            : 'is-danger';
+    }
+
     public function attributes(): array
     {
         return [
-            'activation' => $this->model->isActive() ? 'activated' : 'deactivated',
+            'state' => $this->model->isActive() ? 'activated' : 'deactivated',
         ];
     }
 }

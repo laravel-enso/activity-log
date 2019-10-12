@@ -9,10 +9,10 @@ use LaravelEnso\Core\app\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\Enums\app\Services\Enum;
-use LaravelEnso\People\app\Models\Person;
 use Illuminate\Database\Schema\Blueprint;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
+use LaravelEnso\People\app\Models\Person;
 use LaravelEnso\ActivityLog\App\Events\Updated;
+use LaravelEnso\ActivityLog\app\Facades\Logger;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 
@@ -64,8 +64,10 @@ class FactoryTest extends TestCase
 
         $this->testModel->name = 'test';
 
-        $this->assertEquals(':user updated :model :label with the following changes: :attribute1 was changed from :from1 to :to1',
-            (new Updated($this->testModel))->message());
+        $this->assertEquals(
+            [':user updated :model :label', 'with the following changes:', ':attribute1 was changed from :from1 to :to1'],
+            (new Updated($this->testModel))->message()
+        );
     }
 
     /** @test */
@@ -251,5 +253,10 @@ class LoggableStub implements Loggable {
     public function icon(): string
     {
         return 'icon';
+    }
+    
+    public function iconClass(): string
+    {
+        return 'is-info';
     }
 }

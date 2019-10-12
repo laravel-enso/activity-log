@@ -3,11 +3,11 @@
 namespace LaravelEnso\ActivityLog\app\Observers;
 
 use LaravelEnso\ActivityLog\app\Services\Factory;
-use LaravelEnso\ActivityLog\App\Events\Activation as Event;
+use LaravelEnso\ActivityLog\App\Events\UpdatedActiveState as Event;
 
-class Activation
+class ActiveState
 {
-    public function activation($model)
+    public function updatedActiveState($model)
     {
         (new Factory(new Event($model)))->create();
     }

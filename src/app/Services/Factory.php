@@ -31,6 +31,7 @@ class Factory
                 'message' => $this->event->message(),
                 'attributes' => $this->attributes(),
                 'icon' => $this->event->icon(),
+                'iconClass' => $this->event->iconClass(),
             ],
         ]);
     }
