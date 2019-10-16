@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\ActivityLog;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use LaravelEnso\ActivityLog\app\Facades\Logger;
 
@@ -11,7 +12,7 @@ class LoggerServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if (! app()->environment('testing')) {
+        if (! App::environment('testing')) {
             Logger::register($this->register);
         }
     }
