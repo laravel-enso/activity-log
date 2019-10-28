@@ -10,7 +10,7 @@ Activity logger dependency for [Laravel Enso](https://laravel-enso.com).
 
 This package works exclusively within the [Enso](https://github.com/laravel-enso/Enso) ecosystem.
 
-The front end assets that utilize this api are present in the [ui](https://github.com/enso-ui/ui) package.
+The front end assets that utilize this api are present in the [ui](https://github.com/enso-ui/activity-log) package.
 
 For live examples and demos, you may visit [laravel-enso.com](https://www.laravel-enso.com)
 
@@ -18,23 +18,7 @@ For live examples and demos, you may visit [laravel-enso.com](https://www.larave
 
 <sup>click on the photo to view a short demo in compatible browsers</sup>
 
-## Installation
-
-Comes pre-installed in Enso.
-
-## Features
-
-- friendly interface for viewing user activity in the application
-- available by default only to users with the Administrator role
-- events are presented in an useful manner
-- allows the filtering of data depending on a date interval, the roles of the users, the users or the type of events
-- supports create, update, delete and custom event types
-- the models whose changes need to represented, need only to use the `LogsActivity` trait. Optionally, 
-you may set additional configuration attributes on the model to further fine tune the way data is logged/represented
-- the logger will not attempt to persist data when there is no authenticated user - this avoids issues when 
-using seeder / playing in tinker, etc.
-
-### Configuration & Usage
+### Installation, Configuration & Usage
 
 Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/backend/activity-log.html)
 
