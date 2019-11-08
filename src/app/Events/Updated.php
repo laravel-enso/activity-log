@@ -2,15 +2,15 @@
 
 namespace LaravelEnso\ActivityLog\App\Events;
 
-use ReflectionClass;
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\Enums\app\Services\Enum;
-use LaravelEnso\Helpers\app\Classes\Obj;
+use LaravelEnso\ActivityLog\App\Contracts\Loggable;
+use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Facades\Logger;
 use LaravelEnso\ActivityLog\app\Traits\IsLoggable;
-use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
+use LaravelEnso\Enums\app\Services\Enum;
+use LaravelEnso\Helpers\app\Classes\Obj;
+use ReflectionClass;
 
 class Updated implements Loggable, ProvidesAttributes
 {

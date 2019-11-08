@@ -2,11 +2,11 @@
 
 namespace LaravelEnso\ActivityLog\App\Events;
 
+use LaravelEnso\ActivityLog\App\Contracts\Loggable;
+use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 use LaravelEnso\ActivityLog\app\Enums\Events;
 use LaravelEnso\ActivityLog\app\Traits\IsLoggable;
 use LaravelEnso\Helpers\app\Contracts\Activatable;
-use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 
 class UpdatedActiveState implements Loggable, ProvidesAttributes
 {

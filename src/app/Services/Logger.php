@@ -2,8 +2,8 @@
 
 namespace LaravelEnso\ActivityLog\app\Services;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use LaravelEnso\ActivityLog\app\Enums\Observers;
 
 class Logger

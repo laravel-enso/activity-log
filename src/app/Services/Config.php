@@ -2,10 +2,10 @@
 
 namespace LaravelEnso\ActivityLog\app\Services;
 
-use ReflectionClass;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use LaravelEnso\Helpers\app\Classes\Obj;
+use ReflectionClass;
 
 class Config
 {

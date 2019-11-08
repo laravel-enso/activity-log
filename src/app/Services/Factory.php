@@ -3,10 +3,10 @@
 namespace LaravelEnso\ActivityLog\app\Services;
 
 use Illuminate\Support\Facades\Auth;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
+use LaravelEnso\ActivityLog\app\Facades\Logger;
+use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
 class Factory
 {
