@@ -30,8 +30,8 @@ class Timeline implements Responsable
     {
         $filters = json_decode($request->get('filters'));
 
-        return ActivityLog::with('createdBy.person', 'createdBy.avatar')
-            ->latest()
+        return ActivityLog::latest()
+            ->with('createdBy.person', 'createdBy.avatar')
             ->skip($request->get('offset'))
             ->between($filters->interval->min, $filters->interval->max)
             ->forUsers($filters->userIds)

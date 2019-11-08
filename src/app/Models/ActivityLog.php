@@ -17,13 +17,13 @@ class ActivityLog extends Model
     public function scopeBetween($query, $startDate, $endDate)
     {
         $query->when($startDate, function ($query) use ($startDate) {
-            $query->where('created_at', '>=', Carbon::createFromFormat(
-                config('enso.config.dateTimeFormat'), $startDate
-            ));
+            $query->where(
+                'created_at', '>=', Carbon::parse($startDate)
+            );
         })->when($endDate, function ($query) use ($endDate) {
-            $query->where('created_at', '<', Carbon::createFromFormat(
-                config('enso.config.dateTimeFormat'), $endDate
-            ));
+            $query->where(
+                'created_at', '<', Carbon::parse($endDate)
+            );
         });
     }
 
