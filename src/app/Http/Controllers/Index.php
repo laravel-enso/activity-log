@@ -7,8 +7,8 @@ use LaravelEnso\ActivityLog\app\Http\Responses\Timeline;
 
 class Index extends Controller
 {
-    public function __invoke()
+    public function __invoke(Timeline $timeline)
     {
-        return new Timeline;
+        return $timeline;
     }
 }
