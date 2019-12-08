@@ -6,10 +6,10 @@ use LaravelEnso\Enums\app\Services\Enum;
 
 class Events extends Enum
 {
-    const Created = 1;
-    const Updated = 2;
-    const Deleted = 3;
-    const UpdatedActiveState = 4;
+    public const Created = 1;
+    public const Updated = 2;
+    public const Deleted = 3;
+    public const UpdatedActiveState = 4;
 
     protected static function attributes()
     {

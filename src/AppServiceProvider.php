@@ -29,7 +29,9 @@ class AppServiceProvider extends ServiceProvider
     private function publish()
     {
         $this->publishes([
-            __DIR__.'/../stubs/LoggerServiceProvider.stub' => app_path('Providers/LoggerServiceProvider.php'),
+            __DIR__.'/../stubs/LoggerServiceProvider.stub' => app_path(
+                'Providers/LoggerServiceProvider.php'
+            ),
         ], 'activity-log-provider');
     }
 }

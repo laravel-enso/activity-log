@@ -35,11 +35,14 @@ class Updated implements Loggable, ProvidesAttributes
     public function message()
     {
         $message = ':user updated :model :label';
-
         $index = 0;
 
         $changes = $this->loggableChanges->reduce(function ($message) use (&$index) {
-            return $message->push(':attribute'.(++$index)." was changed from :from{$index} to :to{$index}");
+            $index++;
+
+            return $message->push(
+                ":attribute{$index} was changed from :from{$index} to :to{$index}"
+            );
         }, collect());
 
         return $changes->isNotEmpty() ?
@@ -68,6 +71,11 @@ class Updated implements Loggable, ProvidesAttributes
                 "to{$index}", $this->parse($attribute, $this->model->{$attribute})
             );
         }, collect())->toArray();
+    }
+
+    public function iconClass(): string
+    {
+        return 'is-warning';
     }
 
     private function attribute($attribute)
@@ -120,10 +128,5 @@ class Updated implements Loggable, ProvidesAttributes
             ->map(function ($value, $key) {
                 return is_int($key) ? $value : $key;
             });
-    }
-
-    public function iconClass(): string
-    {
-        return 'is-warning';
     }
 }

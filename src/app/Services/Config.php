@@ -42,7 +42,7 @@ class Config
             $config['alias'] = $this->defaultAlias();
         }
 
-        return  $config;
+        return $config;
     }
 
     private function validate($config)
