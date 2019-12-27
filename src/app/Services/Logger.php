@@ -45,7 +45,8 @@ class Logger
 
     public function remove($models)
     {
-        (new Collection($models))->each(fn ($model) => $this->models->forget($model));
+        (new Collection($models))
+            ->each(fn ($model) => $this->models->forget($model));
     }
 
     public function all()
