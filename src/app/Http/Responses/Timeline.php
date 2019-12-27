@@ -16,7 +16,7 @@ class Timeline implements Responsable
     {
         $this->timeline = $this->timeline($request);
 
-        return $this->days()->map(fn($day) => [
+        return $this->days()->map(fn ($day) => [
             'date' => $day,
             'entries' => $this->dayEntries($day)->map(fn($entry) => $this->resource($entry)),
         ]);
@@ -50,14 +50,14 @@ class Timeline implements Responsable
     private function dayEntries($day)
     {
         return $this->timeline
-            ->filter(fn($entry) => $entry->created_at->format('Y-m-d') === $day)
+            ->filter(fn ($entry) => $entry->created_at->format('Y-m-d') === $day)
             ->values();
     }
 
     private function days()
     {
         return $this->timeline
-            ->map(fn($entry) => $entry->created_at->format('Y-m-d'))
+            ->map(fn ($entry) => $entry->created_at->format('Y-m-d'))
             ->unique()->values();
     }
 }
