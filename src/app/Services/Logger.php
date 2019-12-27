@@ -19,19 +19,20 @@ class Logger
 
     public function register($models)
     {
-        collect($models)->each(function ($config, $model) {
-            $this->models->put($model, new Config($model, $config));
-        });
+        collect($models)->each(fn($config, $model) => (
+            $this->models->put($model, new Config($model, $config))
+        ));
     }
 
     public function observe()
     {
-        $this->monitored()->each(function ($config, $model) {
-            $config->events()->intersect(App::make(Observers::class)::keys())
-                ->each(function ($event) use ($model) {
-                    $model::observe(App::make(Observers::class)::get($event));
-                });
-        });
+        $this->monitored()->each(fn($config, $model) => (
+            $config->events()
+                ->intersect(App::make(Observers::class)::keys())
+                ->each(fn($event) => (
+                    $model::observe(App::make(Observers::class)::get($event))
+                ))
+        ));
     }
 
     public function config($model)
@@ -43,9 +44,7 @@ class Logger
 
     public function remove($models)
     {
-        collect($models)->each(function ($model) {
-            $this->models->forget($model);
-        });
+        collect($models)->each(fn($model) => $this->models->forget($model));
     }
 
     public function all()
@@ -55,9 +54,9 @@ class Logger
 
     public function monitored()
     {
-        return $this->models->filter(function ($config) {
-            return ! $this->ignored->contains($config->alias());
-        });
+        return $this->models->filter(fn($config) => (
+            ! $this->ignored->contains($config->alias())
+        ));
     }
 
     public function ignore($model)
