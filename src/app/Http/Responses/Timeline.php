@@ -18,7 +18,7 @@ class Timeline implements Responsable
 
         return $this->days()->map(fn ($day) => [
             'date' => $day,
-            'entries' => $this->dayEntries($day)->map(fn($entry) => $this->resource($entry)),
+            'entries' => $this->dayEntries($day)->map(fn ($entry) => $this->resource($entry)),
         ]);
     }
 

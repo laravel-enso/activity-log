@@ -48,7 +48,7 @@ class Factory
     private function label()
     {
         return collect(explode('.', $this->config->label()))
-            ->reduce(fn($label, $attribute) => $label->{$attribute}, $this->event->model());
+            ->reduce(fn ($label, $attribute) => $label->{$attribute}, $this->event->model());
     }
 
     private function providedAttributes()

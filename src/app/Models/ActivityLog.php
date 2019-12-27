@@ -16,31 +16,31 @@ class ActivityLog extends Model
 
     public function scopeBetween($query, $startDate, $endDate)
     {
-        $query->when($startDate, fn($query) => (
+        $query->when($startDate, fn ($query) => (
             $query->where('created_at', '>=', Carbon::parse($startDate))
-        ))->when($endDate, fn($query) => (
+        ))->when($endDate, fn ($query) => (
             $query->where('created_at', '<', Carbon::parse($endDate))
         ));
     }
 
     public function scopeForUsers($query, array $userIds)
     {
-        $query->when(! empty($userIds), fn($query) => (
+        $query->when(! empty($userIds), fn ($query) => (
             $query->whereIn('created_by', $userIds)
         ));
     }
 
     public function scopeForEvents($query, array $events)
     {
-        $query->when(! empty($events), fn($query) => (
+        $query->when(! empty($events), fn ($query) => (
             $query->whereIn('event', $events)
         ));
     }
 
     public function scopeForRoles($query, array $roleIds)
     {
-        $query->when(! empty($roleIds), fn($query) => (
-            $query->whereHas('createdBy', fn($query) => (
+        $query->when(! empty($roleIds), fn ($query) => (
+            $query->whereHas('createdBy', fn ($query) => (
                 $query->whereIn('role_id', $roleIds)
             ))
         ));
