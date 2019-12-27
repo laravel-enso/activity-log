@@ -3,6 +3,7 @@
 namespace LaravelEnso\ActivityLog\App\Events;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 use LaravelEnso\ActivityLog\app\Enums\Events;
@@ -16,14 +17,14 @@ class Updated implements Loggable, ProvidesAttributes
 {
     use IsLoggable;
 
-    private $model;
-    private $loggableChanges;
-    private $attributes;
+    private Model $model;
+    private Collection $loggableChanges;
+    private array $attributes;
 
     public function __construct(Model $model)
     {
         $this->model = $model;
-        $this->attributes = Logger::config($model)->attributes();
+        $this->attributes = Logger::config($model)->attributes()->toArray();
         $this->loggableChanges = $this->loggableChanges();
     }
 
@@ -35,20 +36,17 @@ class Updated implements Loggable, ProvidesAttributes
     public function message()
     {
         $message = ':user updated :model :label';
-        $index = 0;
+        $changes = new Collection();
+        $count = $this->loggableChanges->count();
 
-        $changes = $this->loggableChanges->reduce(function ($message) use (&$index) {
-            $index++;
+        for ($i = 0; $i < $count; $i++) {
+            $changes->push(":attribute{$i} was changed from :from{$i} to :to{$i}");
+        }
 
-            return $message->push(
-                ":attribute{$index} was changed from :from{$index} to :to{$index}"
-            );
-        }, collect());
-
-        return $changes->isNotEmpty() ?
-            $changes->prepend('with the following changes:')
-                ->prepend($message)->toArray()
-            : $message;
+        return $changes->isEmpty()
+            ? $message
+            : $changes->prepend('with the following changes:')
+                ->prepend($message)->toArray();
     }
 
     public function icon(): string
@@ -58,19 +56,16 @@ class Updated implements Loggable, ProvidesAttributes
 
     public function attributes(): array
     {
-        $index = 0;
+        $attributes = new Collection();
 
-        return $this->loggableChanges->reduce(function ($attributes, $attribute) use (&$index) {
-            $index++;
+        $this->loggableChanges->each(fn ($attribute, $i) => $attributes
+            ->put("attribute{$i}", $this->attribute($attribute))
+            ->put("from{$i}", $this->parse(
+                $attribute, $this->model->getOriginal($attribute)
+            ))->put("to{$i}", $this->parse($attribute, $this->model->{$attribute}))
+        );
 
-            return $attributes->put(
-                "attribute{$index}", $this->attribute($attribute)
-            )->put(
-                "from{$index}", $this->parse($attribute, $this->model->getOriginal($attribute))
-            )->put(
-                "to{$index}", $this->parse($attribute, $this->model->{$attribute})
-            );
-        }, collect())->toArray();
+        return $attributes->toArray();
     }
 
     public function iconClass(): string
@@ -117,14 +112,14 @@ class Updated implements Loggable, ProvidesAttributes
 
     private function loggableChanges()
     {
-        return collect($this->model->getDirty())
+        return (new Collection($this->model->getDirty()))
             ->intersectByKeys($this->loggableAttributes()->flip())
             ->keys();
     }
 
     private function loggableAttributes()
     {
-        return collect($this->attributes)
+        return (new Collection($this->attributes))
             ->map(fn ($value, $key) => is_int($key) ? $value : $key);
     }
 }

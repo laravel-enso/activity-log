@@ -11,7 +11,7 @@ class Created implements Loggable
 {
     use IsLoggable;
 
-    private $model;
+    private Model $model;
 
     public function __construct(Model $model)
     {

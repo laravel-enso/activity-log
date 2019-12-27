@@ -2,6 +2,8 @@
 
 namespace LaravelEnso\ActivityLog\app\Services;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
@@ -10,9 +12,9 @@ use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 
 class Factory
 {
-    private $event;
-    private $model;
-    private $config;
+    private Loggable $event;
+    private Model $model;
+    private array $config;
 
     public function __construct(Loggable $event)
     {
@@ -47,8 +49,8 @@ class Factory
 
     private function label()
     {
-        return collect(explode('.', $this->config->label()))
-            ->reduce(fn($label, $attribute) => $label->{$attribute}, $this->event->model());
+        return (new Collection(explode('.', $this->config->label())))
+            ->reduce(fn ($label, $attribute) => $label->{$attribute}, $this->event->model());
     }
 
     private function providedAttributes()

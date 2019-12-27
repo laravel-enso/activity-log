@@ -3,36 +3,37 @@
 namespace LaravelEnso\ActivityLog\app\Services;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use LaravelEnso\ActivityLog\app\Enums\Observers;
 
 class Logger
 {
-    private $models;
-    private $ignored;
+    private Collection $models;
+    private Collection $ignored;
 
     public function __construct()
     {
-        $this->models = collect();
-        $this->ignored = collect();
+        $this->models = new Collection();
+        $this->ignored = new Collection();
     }
 
     public function register($models)
     {
-        collect($models)->each(fn($config, $model) => (
-            $this->models->put($model, new Config($model, $config))
-        ));
+        (new Collection($models))
+            ->each(fn ($config, $model) => $this->models
+                ->put($model, new Config($model, $config))
+            );
     }
 
     public function observe()
     {
-        $this->monitored()->each(fn($config, $model) => (
-            $config->events()
-                ->intersect(App::make(Observers::class)::keys())
-                ->each(fn($event) => (
-                    $model::observe(App::make(Observers::class)::get($event))
-                ))
-        ));
+        $this->monitored()->each(fn ($config, $model) => $config->events()
+            ->intersect(App::make(Observers::class)::keys())
+            ->each(fn ($event) => $model::observe(
+                App::make(Observers::class)::get($event))
+            )
+        );
     }
 
     public function config($model)
@@ -44,7 +45,7 @@ class Logger
 
     public function remove($models)
     {
-        collect($models)->each(fn($model) => $this->models->forget($model));
+        (new Collection($models))->each(fn ($model) => $this->models->forget($model));
     }
 
     public function all()
@@ -54,9 +55,9 @@ class Logger
 
     public function monitored()
     {
-        return $this->models->filter(fn($config) => (
-            ! $this->ignored->contains($config->alias())
-        ));
+        return $this->models->reject(fn ($config) => $this->ignored
+            ->contains($config->alias())
+        );
     }
 
     public function ignore($model)

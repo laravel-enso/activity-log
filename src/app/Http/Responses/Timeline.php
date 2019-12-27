@@ -3,6 +3,7 @@
 namespace LaravelEnso\ActivityLog\app\Http\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Database\Eloquent\Collection;
 use LaravelEnso\ActivityLog\app\Models\ActivityLog;
 use LaravelEnso\TrackWho\app\Http\Resources\TrackWho;
 
@@ -10,7 +11,7 @@ class Timeline implements Responsable
 {
     private const Chunk = 50;
 
-    private $timeline;
+    private Collection $timeline;
 
     public function toResponse($request)
     {
@@ -18,7 +19,8 @@ class Timeline implements Responsable
 
         return $this->days()->map(fn ($day) => [
             'date' => $day,
-            'entries' => $this->dayEntries($day)->map(fn($entry) => $this->resource($entry)),
+            'entries' => $this->dayEntries($day)
+                ->map(fn ($entry) => $this->resource($entry)),
         ]);
     }
 
@@ -58,6 +60,7 @@ class Timeline implements Responsable
     {
         return $this->timeline
             ->map(fn ($entry) => $entry->created_at->format('Y-m-d'))
-            ->unique()->values();
+            ->unique()
+            ->values();
     }
 }

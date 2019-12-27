@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::middleware(['web', 'auth', 'core'])
     ->namespace('LaravelEnso\ActivityLog\app\Http\Controllers')
     ->prefix('api/core/activityLogs')

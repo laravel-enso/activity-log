@@ -12,7 +12,7 @@ class UpdatedActiveState implements Loggable, ProvidesAttributes
 {
     use IsLoggable;
 
-    private $model;
+    private Activatable $model;
 
     public function __construct(Activatable $model)
     {
@@ -36,15 +36,11 @@ class UpdatedActiveState implements Loggable, ProvidesAttributes
 
     public function iconClass(): string
     {
-        return $this->model->isActive()
-            ? 'is-success'
-            : 'is-danger';
+        return $this->model->isActive() ? 'is-success' : 'is-danger';
     }
 
     public function attributes(): array
     {
-        return [
-            'state' => $this->model->isActive() ? 'activated' : 'deactivated',
-        ];
+        return ['state' => $this->model->isActive() ? 'activated' : 'deactivated'];
     }
 }

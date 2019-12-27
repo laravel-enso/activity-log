@@ -11,8 +11,8 @@ class Config
 {
     private const ProxiedMethods = ['alias', 'attributes', 'events', 'label'];
 
-    private $model;
-    private $config;
+    private string $model;
+    private Obj $config;
 
     public function __construct(string $model, array $config)
     {
@@ -22,11 +22,13 @@ class Config
 
     public function __call($method, $args)
     {
-        if (collect(self::ProxiedMethods)->contains($method)) {
+        if (in_array($method, self::ProxiedMethods)) {
             return $this->config->get($method);
         }
 
-        throw new BadMethodCallException('Method '.static::class.'::'.$method.'() not found');
+        $class = static::class;
+
+        throw new BadMethodCallException("Method {$class}::{$method}() not found");
     }
 
     public function has($attribute)
@@ -45,15 +47,17 @@ class Config
         return $config;
     }
 
-    private function validate($config)
+    private function validate()
     {
         //TODO add config validator
     }
 
     private function defaultAlias()
     {
-        return str_replace(
-            '_', ' ', Str::snake((new ReflectionClass($this->model))->getShortName())
+        $alias = Str::snake(
+            (new ReflectionClass($this->model))->getShortName()
         );
+
+        return str_replace('_', ' ', $alias);
     }
 }
