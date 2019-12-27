@@ -125,6 +125,6 @@ class Updated implements Loggable, ProvidesAttributes
     private function loggableAttributes()
     {
         return collect($this->attributes)
-            ->map(fn($value, $key) => is_int($key) ? $value : $key);
+            ->map(fn ($value, $key) => is_int($key) ? $value : $key);
     }
 }
