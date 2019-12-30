@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelEnso\ActivityLog\app\Http\Responses;
+namespace LaravelEnso\ActivityLog\App\Http\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Database\Eloquent\Collection;
-use LaravelEnso\ActivityLog\app\Models\ActivityLog;
-use LaravelEnso\TrackWho\app\Http\Resources\TrackWho;
+use LaravelEnso\ActivityLog\App\Models\ActivityLog;
+use LaravelEnso\TrackWho\App\Http\Resources\TrackWho;
 
 class Timeline implements Responsable
 {

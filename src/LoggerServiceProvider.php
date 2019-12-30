@@ -4,7 +4,7 @@ namespace LaravelEnso\ActivityLog;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
+use LaravelEnso\ActivityLog\App\Facades\Logger;
 
 class LoggerServiceProvider extends ServiceProvider
 {

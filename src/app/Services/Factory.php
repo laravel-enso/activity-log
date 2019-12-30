@@ -1,14 +1,14 @@
 <?php
 
-namespace LaravelEnso\ActivityLog\app\Services;
+namespace LaravelEnso\ActivityLog\App\Services;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
-use LaravelEnso\ActivityLog\app\Models\ActivityLog;
+use LaravelEnso\ActivityLog\App\Facades\Logger;
+use LaravelEnso\ActivityLog\App\Models\ActivityLog;
 
 class Factory
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelEnso\ActivityLog\app\Observers;
+namespace LaravelEnso\ActivityLog\App\Observers;
 
 use LaravelEnso\ActivityLog\App\Events\UpdatedActiveState as Event;
-use LaravelEnso\ActivityLog\app\Services\Factory;
-use LaravelEnso\Helpers\app\Contracts\Activatable;
+use LaravelEnso\ActivityLog\App\Services\Factory;
+use LaravelEnso\Helpers\App\Contracts\Activatable;
 
 class ActiveState
 {

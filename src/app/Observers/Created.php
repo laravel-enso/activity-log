@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelEnso\ActivityLog\app\Observers;
+namespace LaravelEnso\ActivityLog\App\Observers;
 
-use LaravelEnso\ActivityLog\app\Events\Created as Event;
-use LaravelEnso\ActivityLog\app\Services\Factory;
+use LaravelEnso\ActivityLog\App\Events\Created as Event;
+use LaravelEnso\ActivityLog\App\Services\Factory;
 
 class Created
 {

@@ -5,16 +5,16 @@ namespace LaravelEnso\ActivityLog\Test\units\Services;
 use Tests\TestCase;
 use Faker\Factory as FakerFactory;
 use Illuminate\Support\Facades\Auth;
-use LaravelEnso\Core\app\Models\User;
+use LaravelEnso\Core\App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use LaravelEnso\People\app\Models\Person;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
-use LaravelEnso\ActivityLog\app\Services\Factory;
+use LaravelEnso\People\App\Models\Person;
+use LaravelEnso\ActivityLog\App\Facades\Logger;
+use LaravelEnso\ActivityLog\App\Services\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\app\Models\ActivityLog;
+use LaravelEnso\ActivityLog\App\Models\ActivityLog;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
 
 class FactoryTest extends TestCase

@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Events\Updated;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
-use LaravelEnso\Core\app\Models\User;
-use LaravelEnso\Enums\app\Services\Enum;
-use LaravelEnso\People\app\Models\Person;
+use LaravelEnso\ActivityLog\App\Facades\Logger;
+use LaravelEnso\Core\App\Models\User;
+use LaravelEnso\Enums\App\Services\Enum;
+use LaravelEnso\People\App\Models\Person;
 use Tests\TestCase;
 
 class FactoryTest extends TestCase
@@ -22,8 +22,8 @@ class FactoryTest extends TestCase
     use RefreshDatabase;
 
     private Faker $faker;
-    private TestModel $testModel;
-    private RelationalModel $relationalModel;
+    private LoggerTestModel $testModel;
+    private LoggerRelatedModel $relationalModel;
     private User $user;
     private array $attributes;
 
@@ -33,11 +33,11 @@ class FactoryTest extends TestCase
 
         $this->faker = FakerFactory::create();
 
-        TestModel::createTable();
-        RelationalModel::createTable();
+        LoggerTestModel::createTable();
+        LoggerRelatedModel::createTable();
 
         $this->testModel = $this->createTestModel();
-        $this->relationalModel = $this->createRelationalModel();
+        $this->relationalModel = $this->createRelatedModel();
         $this->testModel->relationalModel()
             ->associate($this->relationalModel)
             ->save();
@@ -92,12 +92,12 @@ class FactoryTest extends TestCase
     /** @test */
     public function can_change_relation_attribute()
     {
-        $this->attributes = ['relational_model_id' => [RelationalModel::class => 'name']];
+        $this->attributes = ['relational_model_id' => [LoggerRelatedModel::class => 'name']];
         $this->register();
 
         $oldName = $this->testModel->relationalModel->name;
         $this->testModel->relationalModel()
-            ->associate($this->createRelationalModel());
+            ->associate($this->createRelatedModel());
 
         $this->assertEquals([
             'attribute0' => 'relational model',
@@ -110,7 +110,7 @@ class FactoryTest extends TestCase
     /** @test */
     public function can_get_new_relation_attribute()
     {
-        $this->attributes = ['relational_model_id' => [RelationalModel::class => 'name']];
+        $this->attributes = ['relational_model_id' => [LoggerRelatedModel::class => 'name']];
 
         $this->register();
 
@@ -118,7 +118,7 @@ class FactoryTest extends TestCase
             ->dissociate()->save();
 
         $this->testModel->relationalModel()
-            ->associate($this->createRelationalModel());
+            ->associate($this->createRelatedModel());
 
         $this->assertEquals([
             'attribute0' => 'relational model',
@@ -130,7 +130,7 @@ class FactoryTest extends TestCase
     /** @test */
     public function can_get_delete_relation_attribute()
     {
-        $this->attributes = ['relational_model_id' => [RelationalModel::class => 'name']];
+        $this->attributes = ['relational_model_id' => [LoggerRelatedModel::class => 'name']];
 
         $this->register();
 
@@ -163,23 +163,23 @@ class FactoryTest extends TestCase
 
     private function register()
     {
-        Logger::register([TestModel::class => [
+        Logger::register([LoggerTestModel::class => [
             'attributes' => $this->attributes
         ]]);
     }
 
     private function createTestModel()
     {
-        $test = new TestModel();
+        $test = new LoggerTestModel();
         $test->name = $this->faker->name;
         $test->save();
 
         return $test;
     }
 
-    private function createRelationalModel()
+    private function createRelatedModel()
     {
-        $test = new RelationalModel();
+        $test = new LoggerRelatedModel();
         $test->name = $this->faker->name;
         $test->save();
 
@@ -192,17 +192,17 @@ class FactoryTest extends TestCase
     }
 }
 
-class TestModel extends Model {
+class LoggerTestModel extends Model {
     protected $fillable = ['name','type'];
 
     public function relationalModel()
     {
-        return $this->belongsTo(RelationalModel::class);
+        return $this->belongsTo(LoggerRelatedModel::class);
     }
 
     public static function createTable()
     {
-        Schema::create('test_models', function (Blueprint $table) {
+        Schema::create('logger_test_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('relational_model_id')->nullable();
             $table->integer('type')->nullable();
@@ -212,12 +212,12 @@ class TestModel extends Model {
     }
 }
 
-class RelationalModel extends Model {
+class LoggerRelatedModel extends Model {
     protected $fillable = ['name'];
 
     public static function createTable()
     {
-        Schema::create('relational_models', function (Blueprint $table) {
+        Schema::create('logger_related_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->timestamps();

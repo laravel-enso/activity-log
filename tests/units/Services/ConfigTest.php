@@ -3,7 +3,7 @@
 namespace LaravelEnso\ActivityLog\Test\units\Services;
 
 use Tests\TestCase;
-use LaravelEnso\ActivityLog\app\Services\Config;
+use LaravelEnso\ActivityLog\App\Services\Config;
 
 class ConfigTest extends TestCase
 {

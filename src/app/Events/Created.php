@@ -4,8 +4,8 @@ namespace LaravelEnso\ActivityLog\App\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\app\Enums\Events;
-use LaravelEnso\ActivityLog\app\Traits\IsLoggable;
+use LaravelEnso\ActivityLog\App\Enums\Events;
+use LaravelEnso\ActivityLog\App\Traits\IsLoggable;
 
 class Created implements Loggable
 {

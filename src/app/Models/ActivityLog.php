@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelEnso\ActivityLog\app\Models;
+namespace LaravelEnso\ActivityLog\App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\TrackWho\app\Traits\CreatedBy;
+use LaravelEnso\TrackWho\App\Traits\CreatedBy;
 
 class ActivityLog extends Model
 {

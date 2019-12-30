@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use LaravelEnso\ActivityLog\App\Contracts\Loggable;
 use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
-use LaravelEnso\ActivityLog\app\Enums\Events;
-use LaravelEnso\ActivityLog\app\Facades\Logger;
-use LaravelEnso\ActivityLog\app\Traits\IsLoggable;
-use LaravelEnso\Enums\app\Services\Enum;
-use LaravelEnso\Helpers\app\Classes\Obj;
+use LaravelEnso\ActivityLog\App\Enums\Events;
+use LaravelEnso\ActivityLog\App\Facades\Logger;
+use LaravelEnso\ActivityLog\App\Traits\IsLoggable;
+use LaravelEnso\Enums\App\Services\Enum;
+use LaravelEnso\Helpers\App\Classes\Obj;
 use ReflectionClass;
 
 class Updated implements Loggable, ProvidesAttributes
