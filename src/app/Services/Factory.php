@@ -14,7 +14,7 @@ class Factory
 {
     private Loggable $event;
     private Model $model;
-    private array $config;
+    private Config $config;
 
     public function __construct(Loggable $event)
     {

@@ -11,7 +11,7 @@ class Events extends Enum
     public const Deleted = 3;
     public const UpdatedActiveState = 4;
 
-    protected static function attributes()
+    protected static function data(): array
     {
         return [
             static::Created => 'Created',

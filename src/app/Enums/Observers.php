@@ -10,7 +10,7 @@ use LaravelEnso\Enums\App\Services\Enum;
 
 class Observers extends Enum
 {
-    protected static $data = [
+    protected static array $data = [
         Events::Created => Created::class,
         Events::Updated => Updated::class,
         Events::Deleted => Deleted::class,
