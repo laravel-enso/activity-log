@@ -5,7 +5,7 @@ namespace LaravelEnso\ActivityLog\App\Http\Responses;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Database\Eloquent\Collection;
 use LaravelEnso\ActivityLog\App\Models\ActivityLog;
-use LaravelEnso\TrackWho\App\Http\Resources\TrackWho;
+use LaravelEnso\Core\App\Http\Resources\User;
 
 class Timeline implements Responsable
 {
@@ -45,7 +45,7 @@ class Timeline implements Responsable
             'id' => $entry->id,
             'meta' => $entry->meta,
             'time' => $entry->created_at->format('H:i A'),
-            'owner' => new TrackWho($entry->createdBy),
+            'owner' => new User($entry->createdBy),
         ];
     }
 
