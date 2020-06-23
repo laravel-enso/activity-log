@@ -2,20 +2,20 @@
 
 namespace LaravelEnso\ActivityLog\Test\units\Services;
 
-use Tests\TestCase;
 use Faker\Factory as FakerFactory;
-use Illuminate\Support\Facades\Auth;
-use LaravelEnso\Core\App\Models\User;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use LaravelEnso\People\App\Models\Person;
-use LaravelEnso\ActivityLog\App\Facades\Logger;
-use LaravelEnso\ActivityLog\App\Services\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\App\Models\ActivityLog;
-use LaravelEnso\ActivityLog\App\Contracts\ProvidesAttributes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use LaravelEnso\ActivityLog\Contracts\Loggable;
+use LaravelEnso\ActivityLog\Contracts\ProvidesAttributes;
+use LaravelEnso\ActivityLog\Facades\Logger;
+use LaravelEnso\ActivityLog\Models\ActivityLog;
+use LaravelEnso\ActivityLog\Services\Factory;
+use LaravelEnso\Core\Models\User;
+use LaravelEnso\People\Models\Person;
+use Tests\TestCase;
 
 class FactoryTest extends TestCase
 {
@@ -27,8 +27,7 @@ class FactoryTest extends TestCase
     private $loggable;
     private $label;
 
-
-    protected function setUp() :void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -70,8 +69,10 @@ class FactoryTest extends TestCase
 
         $this->handle();
 
-        $this->assertEquals($this->loggable->attributes()['attr'],
-            ActivityLog::first()->meta->attributes->attr);
+        $this->assertEquals(
+            $this->loggable->attributes()['attr'],
+            ActivityLog::first()->meta->attributes->attr
+        );
     }
 
     /** @test */
@@ -82,14 +83,16 @@ class FactoryTest extends TestCase
 
         $this->handle();
 
-        $this->assertEquals($this->testModel->relationalModel->name,
-            ActivityLog::first()->meta->attributes->label);
+        $this->assertEquals(
+            $this->testModel->relationalModel->name,
+            ActivityLog::first()->meta->attributes->label
+        );
     }
 
     private function handle()
     {
         Logger::register([TestModel::class => [
-            'label' => $this->label
+            'label' => $this->label,
         ]]);
         (new Factory($this->loggable))->create();
     }
@@ -120,7 +123,8 @@ class FactoryTest extends TestCase
     }
 }
 
-class TestModel extends Model {
+class TestModel extends Model
+{
     protected $fillable = ['name'];
 
     public function relationalModel()
@@ -139,8 +143,8 @@ class TestModel extends Model {
     }
 }
 
-
-class RelationalModel extends Model {
+class RelationalModel extends Model
+{
     protected $fillable = ['name'];
 
     public static function createTable()
@@ -153,7 +157,8 @@ class RelationalModel extends Model {
     }
 }
 
-class LoggableStub implements Loggable {
+class LoggableStub implements Loggable
+{
     private $testModel;
 
     public function __construct($testModel)
@@ -180,18 +185,19 @@ class LoggableStub implements Loggable {
     {
         return 'icon';
     }
-    
+
     public function iconClass(): string
     {
         return 'icon';
     }
 }
 
-class LoggableWithAttributesStub extends LoggableStub implements ProvidesAttributes{
+class LoggableWithAttributesStub extends LoggableStub implements ProvidesAttributes
+{
     public function attributes(): array
     {
         return [
-            'attr' => 'val'
+            'attr' => 'val',
         ];
     }
 }

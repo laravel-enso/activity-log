@@ -3,7 +3,7 @@
 namespace LaravelEnso\ActivityLog;
 
 use Illuminate\Support\Facades\App;
-use LaravelEnso\ActivityLog\App\Enums\Events;
+use LaravelEnso\ActivityLog\Enums\Events;
 use LaravelEnso\Enums\EnumServiceProvider as ServiceProvider;
 
 class EnumServiceProvider extends ServiceProvider

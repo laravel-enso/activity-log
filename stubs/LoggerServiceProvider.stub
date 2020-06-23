@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use LaravelEnso\ActivityLog\App\Facades\Logger;
+use LaravelEnso\ActivityLog\Facades\Logger;
 use LaravelEnso\ActivityLog\LoggerServiceProvider as ServiceProvider;
 
 class LoggerServiceProvider extends ServiceProvider

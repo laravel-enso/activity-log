@@ -9,12 +9,12 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
-use LaravelEnso\ActivityLog\App\Contracts\Loggable;
-use LaravelEnso\ActivityLog\App\Events\Updated;
-use LaravelEnso\ActivityLog\App\Facades\Logger;
-use LaravelEnso\Core\App\Models\User;
-use LaravelEnso\Enums\App\Services\Enum;
-use LaravelEnso\People\App\Models\Person;
+use LaravelEnso\ActivityLog\Contracts\Loggable;
+use LaravelEnso\ActivityLog\Events\Updated;
+use LaravelEnso\ActivityLog\Facades\Logger;
+use LaravelEnso\Core\Models\User;
+use LaravelEnso\Enums\Services\Enum;
+use LaravelEnso\People\Models\Person;
 use Tests\TestCase;
 
 class FactoryTest extends TestCase
@@ -27,7 +27,7 @@ class FactoryTest extends TestCase
     private User $user;
     private array $attributes;
 
-    protected function setUp() :void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -45,7 +45,6 @@ class FactoryTest extends TestCase
         $this->user = factory(User::class)->create();
         $this->user->person()->associate(factory(Person::class)->create());
         Auth::setUser($this->user);
-
     }
 
     /** @test */
@@ -55,8 +54,10 @@ class FactoryTest extends TestCase
 
         $this->register();
 
-        $this->assertEquals(':user updated :model :label',
-            (new Updated($this->testModel))->message());
+        $this->assertEquals(
+            ':user updated :model :label',
+            (new Updated($this->testModel))->message()
+        );
     }
 
     /** @test */
@@ -86,7 +87,7 @@ class FactoryTest extends TestCase
             'attribute0' => 'name',
             'from0' => $oldName,
             'to0' => 'test',
-        ],$this->handle());
+        ], $this->handle());
     }
 
     /** @test */
@@ -105,7 +106,6 @@ class FactoryTest extends TestCase
             'to0' => $this->testModel->relationalModel->name,
         ], $this->handle());
     }
-
 
     /** @test */
     public function can_get_new_relation_attribute()
@@ -153,7 +153,6 @@ class FactoryTest extends TestCase
         $this->testModel->update(['type' => Type::Active]);
         $this->testModel->type = Type::Deactive;
 
-
         $this->assertEquals([
             'attribute0' => 'type',
             'from0' => 'Active',
@@ -164,7 +163,7 @@ class FactoryTest extends TestCase
     private function register()
     {
         Logger::register([LoggerTestModel::class => [
-            'attributes' => $this->attributes
+            'attributes' => $this->attributes,
         ]]);
     }
 
@@ -192,8 +191,9 @@ class FactoryTest extends TestCase
     }
 }
 
-class LoggerTestModel extends Model {
-    protected $fillable = ['name','type'];
+class LoggerTestModel extends Model
+{
+    protected $fillable = ['name', 'type'];
 
     public function relationalModel()
     {
@@ -212,7 +212,8 @@ class LoggerTestModel extends Model {
     }
 }
 
-class LoggerRelatedModel extends Model {
+class LoggerRelatedModel extends Model
+{
     protected $fillable = ['name'];
 
     public static function createTable()
@@ -225,12 +226,14 @@ class LoggerRelatedModel extends Model {
     }
 }
 
-class Type extends Enum {
+class Type extends Enum
+{
     public const Active = 1;
     public const Deactive = 0;
 }
 
-class LoggableStub implements Loggable {
+class LoggableStub implements Loggable
+{
     private $testModel;
 
     public function __construct($testModel)
@@ -257,7 +260,7 @@ class LoggableStub implements Loggable {
     {
         return 'icon';
     }
-    
+
     public function iconClass(): string
     {
         return 'is-info';
