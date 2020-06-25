@@ -10,7 +10,7 @@ use LaravelEnso\ActivityLog\Enums\Events;
 use LaravelEnso\ActivityLog\Facades\Logger;
 use LaravelEnso\ActivityLog\Traits\IsLoggable;
 use LaravelEnso\Enums\Services\Enum;
-use LaravelEnso\Helpers\Classes\Obj;
+use LaravelEnso\Helpers\Services\Obj;
 use ReflectionClass;
 
 class Updated implements Loggable, ProvidesAttributes

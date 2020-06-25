@@ -4,7 +4,7 @@ namespace LaravelEnso\ActivityLog\Services;
 
 use BadMethodCallException;
 use Illuminate\Support\Str;
-use LaravelEnso\Helpers\Classes\Obj;
+use LaravelEnso\Helpers\Services\Obj;
 use ReflectionClass;
 
 class Config
