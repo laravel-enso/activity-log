@@ -1,6 +1,6 @@
 # Activity Log
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f8e148c3247407cab601e3460967a2e)](https://www.codacy.com/app/laravel-enso/activity-log?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laravel-enso/activity-log&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/05ed54287e5640cfbab27b3fcf8b149e)](https://www.codacy.com/gh/laravel-enso/activity-log?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laravel-enso/activity-log&amp;utm_campaign=Badge_Grade) 
 [![StyleCI](https://github.styleci.io/repos/144374422/shield?branch=master)](https://github.styleci.io/repos/144374422)
 [![License](https://poser.pugx.org/laravel-enso/activity-log/license)](https://packagist.org/packages/laravel-enso/activity-log)
 [![Total Downloads](https://poser.pugx.org/laravel-enso/activity-log/downloads)](https://packagist.org/packages/laravel-enso/activity-log)
