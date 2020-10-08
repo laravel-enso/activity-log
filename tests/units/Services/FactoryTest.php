@@ -99,8 +99,8 @@ class FactoryTest extends TestCase
 
     private function initUser()
     {
-        $this->user = factory(User::class)->create();
-        $this->user->person()->associate(factory(Person::class)->create());
+        $this->user = User::factory()->create();
+        $this->user->person()->associate(Person::factory()->create());
         Auth::setUser($this->user);
     }
 
