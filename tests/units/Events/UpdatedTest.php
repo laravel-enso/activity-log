@@ -17,7 +17,7 @@ use LaravelEnso\Enums\Services\Enum;
 use LaravelEnso\People\Models\Person;
 use Tests\TestCase;
 
-class UploadTest extends TestCase
+class UpdatedTest extends TestCase
 {
     use RefreshDatabase;
 
