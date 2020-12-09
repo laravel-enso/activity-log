@@ -41,7 +41,7 @@ class Factory
     private function attributes()
     {
         return [
-            'user' => Auth::user()->person->name,
+            'user' => Auth::user() ? Auth::user()->person->name : 'N/A',
             'model' => $this->config->alias(),
             'label' => $this->label(),
         ] + $this->providedAttributes();
