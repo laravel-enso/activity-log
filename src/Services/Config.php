@@ -38,18 +38,11 @@ class Config
 
     private function parse($config)
     {
-        $this->validate($config);
-
         if (! isset($config['alias'])) {
             $config['alias'] = $this->defaultAlias();
         }
 
         return $config;
-    }
-
-    private function validate()
-    {
-        //TODO add config validator
     }
 
     private function defaultAlias()
