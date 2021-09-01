@@ -36,7 +36,7 @@ class Config
 
     private function parse($config)
     {
-        if (!isset($config['alias'])) {
+        if (! isset($config['alias'])) {
             $config['alias'] = $this->defaultAlias();
         }
 

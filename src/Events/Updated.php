@@ -78,7 +78,7 @@ class Updated implements Loggable, ProvidesAttributes
 
     private function parse($attribute, $value)
     {
-        if (!isset($this->attributes[$attribute])) {
+        if (! isset($this->attributes[$attribute])) {
             return $value;
         }
 
