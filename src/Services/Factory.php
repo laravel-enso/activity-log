@@ -12,13 +12,11 @@ use LaravelEnso\ActivityLog\Models\ActivityLog;
 
 class Factory
 {
-    private Loggable $event;
     private Model $model;
     private Config $config;
 
-    public function __construct(Loggable $event)
+    public function __construct(private Loggable $event)
     {
-        $this->event = $event;
         $this->model = $event->model();
         $this->config = Logger::config($this->model);
     }
@@ -49,7 +47,7 @@ class Factory
 
     private function label()
     {
-        return (new Collection(explode('.', $this->config->label())))
+        return Collection::wrap(explode('.', $this->config->label()))
             ->reduce(fn ($label, $attribute) => $label->{$attribute}, $this->event->model());
     }
 

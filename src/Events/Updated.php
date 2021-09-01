@@ -17,13 +17,11 @@ class Updated implements Loggable, ProvidesAttributes
 {
     use IsLoggable;
 
-    private Model $model;
     private Collection $loggableChanges;
     private array $attributes;
 
-    public function __construct(Model $model)
+    public function __construct(private Model $model)
     {
-        $this->model = $model;
         $this->attributes = Logger::config($model)->attributes()->toArray();
         $this->loggableChanges = $this->loggableChanges();
     }
@@ -80,7 +78,7 @@ class Updated implements Loggable, ProvidesAttributes
 
     private function parse($attribute, $value)
     {
-        if (! isset($this->attributes[$attribute])) {
+        if (!isset($this->attributes[$attribute])) {
             return $value;
         }
 
@@ -102,7 +100,7 @@ class Updated implements Loggable, ProvidesAttributes
         $class = key($relation->toArray());
         $attribute = $relation->get($class);
 
-        return optional($class::find($value))->{$attribute};
+        return $class::find($value)?->{$attribute};
     }
 
     private function readEnum($enum, $value)
@@ -114,14 +112,14 @@ class Updated implements Loggable, ProvidesAttributes
 
     private function loggableChanges()
     {
-        return (new Collection($this->model->getDirty()))
+        return Collection::wrap($this->model->getDirty())
             ->intersectByKeys($this->loggableAttributes()->flip())
             ->keys();
     }
 
     private function loggableAttributes()
     {
-        return (new Collection($this->attributes))
+        return Collection::wrap($this->attributes)
             ->map(fn ($value, $key) => is_int($key) ? $value : $key);
     }
 }

@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Schema;
 use LaravelEnso\ActivityLog\Contracts\Loggable;
 use LaravelEnso\ActivityLog\Events\Updated;
 use LaravelEnso\ActivityLog\Facades\Logger;
-use LaravelEnso\Core\Models\User;
 use LaravelEnso\Enums\Services\Enum;
 use LaravelEnso\People\Models\Person;
+use LaravelEnso\Users\Models\User;
 use Tests\TestCase;
 
 class UpdatedTest extends TestCase
@@ -234,11 +234,8 @@ class Type extends Enum
 
 class LoggableStub implements Loggable
 {
-    private $testModel;
-
-    public function __construct($testModel)
+    public function __construct(private $testModel)
     {
-        $this->testModel = $testModel;
     }
 
     public function type(): int

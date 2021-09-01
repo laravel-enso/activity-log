@@ -20,7 +20,7 @@ class Logger
 
     public function register($models)
     {
-        (new Collection($models))
+        Collection::wrap($models)
             ->each(fn ($config, $model) => $this->models
                 ->put($model, new Config($model, $config)));
     }
@@ -43,7 +43,7 @@ class Logger
 
     public function remove($models)
     {
-        (new Collection($models))
+        Collection::wrap($models)
             ->each(fn ($model) => $this->models->forget($model));
     }
 
@@ -60,7 +60,7 @@ class Logger
 
     public function ignore($model)
     {
-        if (! $this->ignored->contains($model['alias'])) {
+        if (!$this->ignored->contains($model['alias'])) {
             $this->ignored->push($model['alias']);
         }
     }
