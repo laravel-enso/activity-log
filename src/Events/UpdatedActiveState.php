@@ -12,11 +12,8 @@ class UpdatedActiveState implements Loggable, ProvidesAttributes
 {
     use IsLoggable;
 
-    private Activatable $model;
-
-    public function __construct(Activatable $model)
+    public function __construct(private Activatable $model)
     {
-        $this->model = $model;
     }
 
     public function type(): int

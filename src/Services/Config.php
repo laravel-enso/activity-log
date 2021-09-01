@@ -11,12 +11,10 @@ class Config
 {
     private const ProxiedMethods = ['alias', 'attributes', 'events', 'label'];
 
-    private string $model;
     private Obj $config;
 
-    public function __construct(string $model, array $config)
+    public function __construct(private string $model, array $config)
     {
-        $this->model = $model;
         $this->config = new Obj($this->parse($config));
     }
 

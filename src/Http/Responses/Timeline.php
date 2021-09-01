@@ -5,7 +5,7 @@ namespace LaravelEnso\ActivityLog\Http\Responses;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Database\Eloquent\Collection;
 use LaravelEnso\ActivityLog\Models\ActivityLog;
-use LaravelEnso\Core\Http\Resources\User;
+use LaravelEnso\Users\Http\Resources\User;
 
 class Timeline implements Responsable
 {

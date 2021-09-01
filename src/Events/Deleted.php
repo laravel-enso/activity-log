@@ -11,11 +11,8 @@ class Deleted implements Loggable
 {
     use IsLoggable;
 
-    private Model $model;
-
-    public function __construct(Model $model)
+    public function __construct(private Model $model)
     {
-        $this->model = $model;
     }
 
     public function type(): int

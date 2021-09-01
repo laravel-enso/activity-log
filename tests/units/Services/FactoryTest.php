@@ -13,8 +13,8 @@ use LaravelEnso\ActivityLog\Contracts\ProvidesAttributes;
 use LaravelEnso\ActivityLog\Facades\Logger;
 use LaravelEnso\ActivityLog\Models\ActivityLog;
 use LaravelEnso\ActivityLog\Services\Factory;
-use LaravelEnso\Core\Models\User;
 use LaravelEnso\People\Models\Person;
+use LaravelEnso\Users\Models\User;
 use Tests\TestCase;
 
 class FactoryTest extends TestCase
@@ -159,11 +159,8 @@ class RelationalModel extends Model
 
 class LoggableStub implements Loggable
 {
-    private $testModel;
-
-    public function __construct($testModel)
+    public function __construct(private $testModel)
     {
-        $this->testModel = $testModel;
     }
 
     public function type(): int
