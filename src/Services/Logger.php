@@ -60,7 +60,7 @@ class Logger
 
     public function ignore($model)
     {
-        if (!$this->ignored->contains($model['alias'])) {
+        if (! $this->ignored->contains($model['alias'])) {
             $this->ignored->push($model['alias']);
         }
     }
